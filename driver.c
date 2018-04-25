@@ -12,7 +12,7 @@ struct driver {
     int points;
     Season driver_season;
 };
-
+/*
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
     Driver new_driver = malloc(sizeof(*new_driver));
     if(new_driver == NULL) {
@@ -33,29 +33,23 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
 }
 
 //Get a driver , and return ptr to his team. If the function get NULL, return NULL*//
-Team DriverGetTeam(Driver driver) {
-    if (driver == NULL) {
-        return NULL;
-    } else {
-        return driver->driver_team;
-    }
-}
+//Team DriverGetTeam(Driver driver) {
+  //  if (driver == NULL) {
+   //     return NULL;
+ //   } else {
+  //      return driver->driver_team;
+//    }
+//}
 
-const char* DriverGetName(driver driver) {
-    return driver->driver_name;
-}
+//const char* DriverGetName(Driver driver) {
+//    return driver->driver_name;
+//}
 
-//Get a driver and return his ID. If we get null we return null.
-int DriverGetId(Driver driver){
-    if (driver==NULL)
-        return NULL
-    return driver->id;
 
-}
 //the function DriverDestroy Get a driver and free the driver*//
-void DriverDestroy(Driver driver){
-    free(driver);
-}
+//void DriverDestroy(Driver driver){
+//    free(driver);
+//}
 
 
 int DriverGetId (Driver driver) {

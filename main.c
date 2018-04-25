@@ -7,9 +7,9 @@
 
 int main() {
     DriverStatus status = DRIVER_STATUS_OK;
-    Driver d1 = {123, "avi", 4};
+    Driver d1;
     d1->id=123;
-    d1->driver_name
+    d1->driver_name="avi";
     int check=DriverGetId(d1);
     printf("%d", check);
     //Driver d1 = DriverCreate(&status, "driver", 123);
