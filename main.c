@@ -7,12 +7,12 @@
 
 int main() {
     DriverStatus status = DRIVER_STATUS_OK;
-    Driver d1;
-    d1->id=123;
-    d1->driver_name="avi";
-    int check=DriverGetId(d1);
-    printf("%d", check);
-    //Driver d1 = DriverCreate(&status, "driver", 123);
+    Driver d1=DriverCreate(&status,"avi",123);
+    int check=DriverGetId(NULL);
+    if(check==0)
+        printf("yes");
+    else
+        printf("no");
     //assert(status == DRIVER_STATUS_OK);
     //assert(d1 != NULL);
     // assert(DriverGetName(d1) == "driver");

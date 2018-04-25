@@ -12,7 +12,7 @@ struct driver {
     int points;
     Season driver_season;
 };
-/*
+
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
     Driver new_driver = malloc(sizeof(*new_driver));
     if(new_driver == NULL) {
