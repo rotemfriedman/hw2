@@ -27,7 +27,7 @@ int DriverGetId(Driver driver);
 //void  DriverSetTeam(Driver driver, Team team);
 //void  DriverSetSeason(Driver driver, Season season);
 //DriverStatus DriverAddRaceResult(Driver driver, int position);
-//int DriverGetPoints(Driver driver, DriverStatus* status);
+int DriverGetPoints(Driver driver, DriverStatus* status);
 
 
 

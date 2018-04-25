@@ -32,6 +32,28 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
 
 }
 
+
+
+int DriverGetPoints(Driver driver, DriverStatus* status){
+    if(driver==NULL){
+        *status= INVALID_DRIVER;
+    }
+    else {
+        *status=DRIVER_STATUS_OK;
+        return driver->points;
+    }
+}
+
+int DriverGetId (Driver driver) {
+    if (driver==NULL)
+        return (int)NULL;
+    else
+        return driver->id;
+}
+
+
+
+
 //Get a driver , and return ptr to his team. If the function get NULL, return NULL*//
 //Team DriverGetTeam(Driver driver) {
   //  if (driver == NULL) {
@@ -50,12 +72,4 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
 //void DriverDestroy(Driver driver){
 //    free(driver);
 //}
-
-
-int DriverGetId (Driver driver) {
-    if (driver==NULL)
-        return (int)NULL;
-    else
-        return driver->id;
-}
 
