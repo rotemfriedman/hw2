@@ -13,6 +13,19 @@ struct driver {
     Season driver_season;
 };
 
+//*Get a driver and a team. The func’ update the deriver->team to be the current team the the func’ get.*//
+void DriverSetTeam(Driver driver, Team team){
+    driver->driver_team=team;
+}
+
+
+const char* DriverGetName(Driver driver){
+    if (driver==NULL)
+        return NULL;
+    else
+        return driver->driver_name;
+}
+
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
     Driver new_driver = malloc(sizeof(*new_driver));
     if(new_driver == NULL) {
@@ -32,36 +45,14 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
 
 }
 
-
-
-int DriverGetPoints(Driver driver, DriverStatus* status){
-    if(driver==NULL){
-        *status= INVALID_DRIVER;
-    }
-    else {
-        *status=DRIVER_STATUS_OK;
-        return driver->points;
-    }
-}
-
-int DriverGetId (Driver driver) {
-    if (driver==NULL)
-        return (int)NULL;
-    else
-        return driver->id;
-}
-
-
-
-
 //Get a driver , and return ptr to his team. If the function get NULL, return NULL*//
-//Team DriverGetTeam(Driver driver) {
-  //  if (driver == NULL) {
-   //     return NULL;
- //   } else {
-  //      return driver->driver_team;
-//    }
-//}
+Team DriverGetTeam(Driver driver) {
+   if (driver == NULL) {
+        return NULL;
+   } else {
+        return driver->driver_team;
+    }
+}
 
 //const char* DriverGetName(Driver driver) {
 //    return driver->driver_name;
@@ -73,3 +64,10 @@ int DriverGetId (Driver driver) {
 //    free(driver);
 //}
 
+
+//int DriverGetId (Driver driver) {
+//    if (driver==NULL)
+ //       return (int)NULL;
+ //   else
+   //     return driver->id;
+//}

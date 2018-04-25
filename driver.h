@@ -18,16 +18,15 @@ typedef enum driverStatus {
     INVALID_POSITION} DriverStatus;
 
 
-
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId);
 //void   DriverDestroy(Driver driver);
-//const char* DriverGetName(Driver driver);
-int DriverGetId(Driver driver);
-//Team  DriverGetTeam(Driver driver);
-//void  DriverSetTeam(Driver driver, Team team);
+const char* DriverGetName(Driver driver);
+//int DriverGetId(Driver driver);
+Team  DriverGetTeam(Driver driver);
+void  DriverSetTeam(Driver driver, Team team);
 //void  DriverSetSeason(Driver driver, Season season);
 //DriverStatus DriverAddRaceResult(Driver driver, int position);
-int DriverGetPoints(Driver driver, DriverStatus* status);
+//int DriverGetPoints(Driver driver, DriverStatus* status);
 
 
 
