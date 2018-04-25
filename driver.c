@@ -8,9 +8,9 @@
 struct driver {
     int id;
     char* driver_name;
-    Team driver_team;
+   // Team driver_team;
     int points;
-    Season driver_season;
+    //Season driver_season;
 };
 
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
