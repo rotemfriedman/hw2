@@ -55,7 +55,7 @@ Team DriverGetTeam(Driver driver) {
 }
 
 //const char* DriverGetName(Driver driver) {
-//    return driver->driver_name;
+ //   return driver->driver_name;
 //}
 
 
@@ -65,9 +65,11 @@ Team DriverGetTeam(Driver driver) {
 //}
 
 
-//int DriverGetId (Driver driver) {
-//    if (driver==NULL)
- //       return (int)NULL;
- //   else
-   //     return driver->id;
-//}
+int DriverGetId (Driver driver) {
+    if (driver==NULL){
+        return (int)NULL;
+    }
+    else {
+        return driver->id;
+    }
+}
