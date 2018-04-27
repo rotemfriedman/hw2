@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status);                //function that copy the const file - "season_file" to other file
+
 struct season {
     int year;
     int number_of_teams;
@@ -31,18 +33,15 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         return NULL;
     }
 
-    //copy the file season_info, to file my_season_info.
-    int length_of_season_info=strlen(season_info);       //get the length of the file - season_info
-    char* my_season_info=malloc(sizeof(char)*length_of_season_info);
-    strcpy(my_season_info, season_info); //copy the const array-"season_info", to "my_season_info"
+    char * my_season_info = copyFileSeasonCreate(season_info, status);
 
-    token=strtok(my_season_info, "\n");
+     token=strtok(my_season_info, "\n");
     season_year=atoi(token);          //conveert char to int.
     new_season->year=season_year;
 
     token=strtok(NULL, "\n");      //continue in the file, to the first team
     while(token != NULL)
-    {
+     {
         rows_number++;
         token=strtok(NULL, "\n");
     }
@@ -55,19 +54,30 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     token=strtok(my_season_info, "\n");
     token=strtok(NULL, "\n");
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
+    if((new_season->array_team) == NULL) {
+        *status = SEASON_MEMORY_ERROR;
+        return NULL;
+    }
     temp_team = new_season->array_team;
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
+    if((new_season->array_drivers) == NULL) {
+        *status = SEASON_MEMORY_ERROR;
+        return NULL;
+    }
     temp_driver=new_season->array_drivers;
      while(token != NULL)
     {
-
         *temp_team=TeamCreate(&status_team,token);
+        if (status_team == TEAM_MEMORY_ERROR)         //there was a memory error in the func' TeamCreate
+            continue;
         temp_team++;
         token=strtok(NULL, "\n");                 //continue to the driver
         if(token == "None"){
             continue;
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);
+       if (status_driver == DRIVER_MEMORY_ERROR)       //there was a memory error in the func' DriverCreate
+           continue;
         get_id++;                         //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                 //continue to the driver
@@ -75,6 +85,8 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
             continue;
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);
+        if (status_driver == DRIVER_MEMORY_ERROR)       //there was a memory error in the func' DriverCreate
+            continue;
         get_id++;                         //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                 //continue to the next team
@@ -83,6 +95,17 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         new_season->number_of_teams=team_number;
         new_season->number_of_drivers=get_id-1;
 
-
     free(my_season_info);
 }
+
+//copy the file season_info, to file my_season_info.
+    static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status){
+        int length_of_season_info=strlen(season_info);       //get the length of the file - season_info
+        char* copy_season_info=malloc(sizeof(char)*length_of_season_info);
+        if(copy_season_info == NULL) {
+            *status = SEASON_MEMORY_ERROR;
+            return NULL;
+        }
+        strcpy(copy_season_info, season_info);                        //copy the const array-"season_info", to "my_season_info"
+        return copy_season_info;
+    }

@@ -26,7 +26,7 @@ None\n\
 
     Season result;
     result= SeasonCreate(&status_season,season_info);
-
+   // assert (result->)
 
 
 
