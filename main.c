@@ -8,16 +8,17 @@
 int main() {
     DriverStatus status_driver = DRIVER_STATUS_OK;
     SeasonStatus status_season = SEASON_OK;
+    Driver d1=DriverCreate(&status_driver,"Lewis Hamilton",1);
     char* season_info="\
 2018\n\
-Ferrari\n\
-Abcd\n\
-nrn asd\n\
+None\n\
+None\n\
+None\n\
 Mercedes\n\
 Lewis Hamilton\n\
 Valtteri Bottas\n\
 RedBull Racing\n\
-Daniel\n\
+None\n\
 Max  Verstappen\n\
 McLaren\n\
 Fernando Alonso\n\
@@ -26,9 +27,14 @@ None\n\
 
     Season result;
     result= SeasonCreate(&status_season,season_info);
-   // assert (result->)
+   int num_teams=SeasonGetNumberOfTeams(result);
+    int num_drivers=SeasonGetNumberOfDrivers(result);
+    printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
+    DriverSetSeason(d1, result);
 
-
+    int poi=DriverGetPoints(NULL,&status_driver);
+    printf("poi=%d\n",poi);
+    printf("status=%d", status_driver);
 
 //    TeamStatus team_status=TEAM_STATUS_OK;
   //  Driver d1;

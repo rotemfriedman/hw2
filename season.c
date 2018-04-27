@@ -66,24 +66,32 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         return NULL;
     }
     temp_driver=new_season->array_drivers;
-     while(token != NULL)
+    team_number=0;
+    while(token != NULL)
     {
+        if(strcmp(token, "None")==0){                 //check if the team=None
+            token=strtok(NULL, "\n");
+            token=strtok(NULL, "\n");
+            token=strtok(NULL, "\n");
+            continue;
+        }
         *temp_team=TeamCreate(&status_team,token);
         if (status_team == TEAM_MEMORY_ERROR)         //there was a memory error in the func' TeamCreate
             continue;
         temp_team++;
+        team_number++;
         token=strtok(NULL, "\n");                 //continue to the driver
         if(strcmp(token, "None")==0){
             token=strtok(NULL, "\n");                 //continue to the driver
-            token=strtok(NULL, "\n");                 //continue to the next team
-            continue;
         }
-        *temp_driver=DriverCreate(&status_driver,token, get_id);
-       if (status_driver == DRIVER_MEMORY_ERROR)       //there was a memory error in the func' DriverCreate
-           continue;
-        get_id++;                         //get_id +1 to the next driver
-        temp_driver++;
-        token=strtok(NULL, "\n");                 //continue to the driver
+        else {
+            *temp_driver=DriverCreate(&status_driver,token, get_id);
+            if (status_driver == DRIVER_MEMORY_ERROR)       //there was a memory error in the func' DriverCreate
+                continue;
+            get_id++;                         //get_id +1 to the next driver
+            temp_driver++;
+            token=strtok(NULL, "\n");                 //continue to the driver
+        }
         if(strcmp(token, "None")==0){
             token=strtok(NULL, "\n");                 //continue to the next team
             continue;
@@ -100,6 +108,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         new_season->number_of_drivers=get_id-1;
 
     free(my_season_info);
+    return new_season;
 }
 
 //copy the file season_info, to file my_season_info.
@@ -113,3 +122,11 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         strcpy(copy_season_info, season_info);                        //copy the const array-"season_info", to "my_season_info"
         return copy_season_info;
     }
+
+int SeasonGetNumberOfDrivers(Season season){
+    return season->number_of_drivers;
+}
+
+int SeasonGetNumberOfTeams(Season season){
+    return season->number_of_teams;
+}

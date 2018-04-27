@@ -73,3 +73,18 @@ int DriverGetId (Driver driver) {
         return driver->id;
     }
 }
+
+void DriverSetSeason(Driver driver, Season season){
+driver->driver_season=season;
+    driver->points=0;
+}
+
+int DriverGetPoints(Driver driver, DriverStatus* status){
+    if(driver==NULL){
+        *status= INVALID_DRIVER;
+    }
+    else {
+        *status=DRIVER_STATUS_OK;
+        return driver->points;
+    }
+}
