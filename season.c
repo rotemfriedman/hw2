@@ -42,7 +42,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     token=strtok(NULL, "\n");      //continue in the file, to the first team
     while(token != NULL)
      {
-        rows_number++;
+        rows_number++;             //rows_number increase in 1
         token=strtok(NULL, "\n");
     }
 
