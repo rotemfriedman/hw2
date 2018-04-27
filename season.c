@@ -51,6 +51,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     total_driver_number=team_number*2;
 
     //start again ans skip the year
+    my_season_info = copyFileSeasonCreate(season_info, status);
     token=strtok(my_season_info, "\n");
     token=strtok(NULL, "\n");
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
@@ -72,7 +73,9 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
             continue;
         temp_team++;
         token=strtok(NULL, "\n");                 //continue to the driver
-        if(token == "None"){
+        if(strcmp(token, "None")==0){
+            token=strtok(NULL, "\n");                 //continue to the driver
+            token=strtok(NULL, "\n");                 //continue to the next team
             continue;
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);
@@ -81,7 +84,8 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         get_id++;                         //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                 //continue to the driver
-        if(token == "None"){
+        if(strcmp(token, "None")==0){
+            token=strtok(NULL, "\n");                 //continue to the next team
             continue;
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);

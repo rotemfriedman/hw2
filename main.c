@@ -11,8 +11,8 @@ int main() {
     char* season_info="\
 2018\n\
 Ferrari\n\
-Sebastian Vettel\n\
-Kimi Raikonen\n\
+Abcd\n\
+nrn asd\n\
 Mercedes\n\
 Lewis Hamilton\n\
 Valtteri Bottas\n\
