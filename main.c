@@ -23,7 +23,11 @@ McLaren\n\
 Fernando Alonso\n\
 None\n\
 ";
-    Season season = SeasonCreate(&status_season,season_info);
+
+    Season result;
+    result= SeasonCreate(&status_season,season_info);
+
+
 
 
 //    TeamStatus team_status=TEAM_STATUS_OK;

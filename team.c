@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct team {
+struct team{
     char* name_team ;
     Driver first_driver;
     Driver second_driver;
