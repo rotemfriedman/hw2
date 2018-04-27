@@ -22,6 +22,6 @@ Team TeamCreate(TeamStatus* status, char* name);
 //TeamStatus TeamAddDriver(Team team, Driver driver);
 const char * TeamGetName(Team  team);
 //Driver TeamGetDriver(Team  team, DriverNumber driver_number);
-//int TeamGetPoints(Team  team, TeamStatus *status);
+int TeamGetPoints(Team  team, TeamStatus *status);
 
 #endif /* TEAM_H_ */

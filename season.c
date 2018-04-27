@@ -6,6 +6,8 @@
 #include <string.h>
 
 static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status);                //function that copy the const file - "season_file" to other file
+static char * threeToken(char * token);
+static int rowsNumberInSeasonInfo(char *token);
 
 struct season {
     int year;
@@ -16,42 +18,23 @@ struct season {
 };
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
-    int season_year;
-    int rows_number=0;       //the rows number of the file "season_info"
-    int team_number;          //the number of teams that we have in the season
-    int total_driver_number;   //the number of drivers that we have in the season, including NULL
-    char *token;              //used for the function strtok
     Team *temp_team;           //pointer that help us to insert the data to the Team's array
     Driver *temp_driver;       //pointer that help us to insert the data to the Driver's araay
     int get_id=1;             //the driver need to get a id
     DriverStatus status_driver;
     TeamStatus status_team;
-
     Season new_season = malloc(sizeof(*new_season));   //create the new season
     if(new_season == NULL) {
         *status = SEASON_MEMORY_ERROR;
         return NULL;
     }
-
     char * my_season_info = copyFileSeasonCreate(season_info, status);
-
-     token=strtok(my_season_info, "\n");
-    season_year=atoi(token);          //conveert char to int.
-    new_season->year=season_year;
-
-    token=strtok(NULL, "\n");      //continue in the file, to the first team
-    while(token != NULL)
-     {
-        rows_number++;             //rows_number increase in 1
-        token=strtok(NULL, "\n");
-    }
-
-    //calculate the team number and the driver number with help of the rows number of the file.
-    team_number=rows_number/3;
-    total_driver_number=team_number*2;
-
-    //start again ans skip the year
-    my_season_info = copyFileSeasonCreate(season_info, status);
+     char *token=strtok(my_season_info, "\n");
+    int season_year=atoi(token);          //conveert char to int.
+    new_season->year=season_year;      //insert the year to the season
+    int team_number=(rowsNumberInSeasonInfo(token))/3;              //calculate the team number and the driver number with help of the rows number of the file.
+    int total_driver_number=team_number*2;     ////the number of drivers that we have in the season, including NULL
+    my_season_info = copyFileSeasonCreate(season_info, status); //start again and skip the year
     token=strtok(my_season_info, "\n");
     token=strtok(NULL, "\n");
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
@@ -70,9 +53,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     while(token != NULL)
     {
         if(strcmp(token, "None")==0){                 //check if the team=None
-            token=strtok(NULL, "\n");
-            token=strtok(NULL, "\n");
-            token=strtok(NULL, "\n");
+            token=threeToken(token);
             continue;
         }
         *temp_team=TeamCreate(&status_team,token);
@@ -102,11 +83,9 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         get_id++;                         //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                 //continue to the next team
-
     }
         new_season->number_of_teams=team_number;
         new_season->number_of_drivers=get_id-1;
-
     free(my_season_info);
     return new_season;
 }
@@ -121,6 +100,24 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         }
         strcpy(copy_season_info, season_info);                        //copy the const array-"season_info", to "my_season_info"
         return copy_season_info;
+    }
+
+    static char * threeToken(char * token){
+        token=strtok(NULL, "\n");
+        token=strtok(NULL, "\n");
+        token=strtok(NULL, "\n");
+        return token;
+    }
+
+    static int rowsNumberInSeasonInfo(char *token){
+        int rows=0;
+        token=strtok(NULL, "\n");      //continue in the file, to the first team
+        while(token != NULL)
+        {
+            rows++;             //rows increase in 1
+            token=strtok(NULL, "\n");
+        }
+        return rows;
     }
 
 int SeasonGetNumberOfDrivers(Season season){

@@ -31,8 +31,6 @@ Team TeamCreate(TeamStatus* status, char * name){
 
 }
 
-
-
 //*Get team.If the input null return null.
 //Else return th  ptr to the begin of the string that her name there.
 const char * TeamGetName(Team team){
@@ -41,4 +39,23 @@ const char * TeamGetName(Team team){
     else
         return team->name_team;
 
+}
+
+int TeamGetPoints(Team team, TeamStatus *status) {
+    int total_points = 0;
+    DriverStatus status_driver;
+    if (team == NULL){
+        *status = TEAM_NULL_PTR;
+        return total_points;     //total_points=0
+    }
+    else {
+        *status = TEAM_STATUS_OK;
+        if (team->first_driver != NULL){
+            total_points=DriverGetPoints(team->first_driver,&status_driver); //status_driver cant be invalid, because the first_friver!=NULL
+        }
+        if (team->second_driver != NULL){
+            total_points+=DriverGetPoints(team->second_driver,&status_driver);
+        }
+        return total_points;
+    }
 }
