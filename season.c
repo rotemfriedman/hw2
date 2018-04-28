@@ -13,6 +13,8 @@ static Season destroyMySeason(Season season);                               //fu
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
 static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
 static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 
 struct season {
     int year;
