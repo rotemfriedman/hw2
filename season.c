@@ -8,6 +8,7 @@
 //this static function used for the function: seasonCreate
 static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status);                //function that copy the const file - "season_file" to other file
 static int rowsNumberInSeasonInfo(char *token);
+static void insertTheDataToSeason(Season season, char * season_info, Team *temp_team, Driver *temp_driver); //the main function that make the seasonCreate
 static Season destroyMySeason(Season season);                               //function that destroy the season that we created in the SeasonCreate
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
 static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
@@ -24,9 +25,6 @@ struct season {
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
     Team *temp_team;           //pointer that help us to insert the data to the Team's array
     Driver *temp_driver;       //pointer that help us to insert the data to the Driver's araay
-    int get_id=1;             //the driver need to get a id
-    DriverStatus status_driver;
-    TeamStatus status_team;
     Season new_season = malloc(sizeof(*new_season));   //create the new season
     if(new_season == NULL) {                     //free the season. return NULL
         *status = SEASON_MEMORY_ERROR;
@@ -39,8 +37,6 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     int team_number=(rowsNumberInSeasonInfo(token))/3;              //calculate the team number and the driver number with help of the rows number of the file.
     int total_driver_number=team_number*2;     ////the number of drivers that we have in the season, including NULL
     my_season_info = copyFileSeasonCreate(season_info, status); //start again and skip the year
-    token=strtok(my_season_info, "\n");
-    token=strtok(NULL, "\n");
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
         *status = SEASON_MEMORY_ERROR;
@@ -55,42 +51,9 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         destroyMySeason(new_season);    //this function return NULL
     }
     temp_driver=new_season->array_drivers;
-    team_number=0;
-    while(token != NULL)
-    {
-        *temp_team=TeamCreate(&status_team,token);
-        if (status_team == TEAM_MEMORY_ERROR){         //there was a memory error in the func' TeamCreate
-            destroyFinishInCreateSeason(temp_team, temp_driver, new_season);
-        }
-        temp_team++;
-        team_number++;
-        token=strtok(NULL, "\n");                 //continue to the driver
-        if(strcmp(token, "None")==0){
-            token=strtok(NULL, "\n");                 //continue to the driver
-        }
-        else {
-            *temp_driver=DriverCreate(&status_driver,token, get_id);
-            if (status_driver == DRIVER_MEMORY_ERROR){         //there was a memory error in the func' DriverCreate
-                destroyFinishInCreateSeason(temp_team, temp_driver, new_season);
-            }
-            get_id++;                         //get_id +1 to the next driver
-            temp_driver++;
-            token=strtok(NULL, "\n");                 //continue to the driver
-        }
-        if(strcmp(token, "None")==0){
-            token=strtok(NULL, "\n");                 //continue to the next team
-            continue;
-        }
-        *temp_driver=DriverCreate(&status_driver,token, get_id);
-        if (status_driver == DRIVER_MEMORY_ERROR){           //there was a memory error in the func' DriverCreate
-            destroyFinishInCreateSeason(temp_team, temp_driver, new_season);
-        }
-        get_id++;                         //get_id +1 to the next driver
-        temp_driver++;
-        token=strtok(NULL, "\n");                 //continue to the next team
-    }
-        new_season->number_of_teams=team_number;
-        new_season->number_of_drivers=get_id-1;
+
+    insertTheDataToSeason(new_season, my_season_info, temp_team, temp_driver);
+
     free(my_season_info);
     return new_season;
 }
@@ -144,6 +107,50 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         int difference_driver=temp_driver-(season->array_drivers);
         destroyArrayByIndex (difference_team, difference_driver, season);
         destroyMySeason(season);
+    }
+
+        static void insertTheDataToSeason(Season season, char * season_info, Team *temp_team, Driver *temp_driver){
+        int get_id=1;             //the driver need to get a id
+        DriverStatus status_driver;
+        TeamStatus status_team;
+        int team_number=0;
+        char *token=strtok(season_info, "\n");
+        token=strtok(NULL, "\n");
+        while(token != NULL)
+        {
+            *temp_team=TeamCreate(&status_team,token);
+            if (status_team == TEAM_MEMORY_ERROR){         //there was a memory error in the func' TeamCreate
+                destroyFinishInCreateSeason(temp_team, temp_driver, season);
+            }
+            temp_team++;
+            team_number++;
+            token=strtok(NULL, "\n");                 //continue to the driver
+            if(strcmp(token, "None")==0){
+                token=strtok(NULL, "\n");                 //continue to the driver
+            }
+            else {
+                *temp_driver=DriverCreate(&status_driver,token, get_id);
+                if (status_driver == DRIVER_MEMORY_ERROR){         //there was a memory error in the func' DriverCreate
+                    destroyFinishInCreateSeason(temp_team, temp_driver, season);
+                }
+                get_id++;                         //get_id +1 to the next driver
+                temp_driver++;
+                token=strtok(NULL, "\n");                 //continue to the driver
+            }
+            if(strcmp(token, "None")==0){
+                token=strtok(NULL, "\n");                 //continue to the next team
+                continue;
+            }
+            *temp_driver=DriverCreate(&status_driver,token, get_id);
+            if (status_driver == DRIVER_MEMORY_ERROR){           //there was a memory error in the func' DriverCreate
+                destroyFinishInCreateSeason(temp_team, temp_driver, season);
+            }
+            get_id++;                         //get_id +1 to the next driver
+            temp_driver++;
+            token=strtok(NULL, "\n");                 //continue to the next team
+        }
+        season->number_of_teams=team_number;
+        season->number_of_drivers=get_id-1;
     }
 
     int SeasonGetNumberOfDrivers(Season season){
