@@ -60,9 +60,10 @@ Team DriverGetTeam(Driver driver) {
 
 
 //the function DriverDestroy Get a driver and free the driver*//
-//void DriverDestroy(Driver driver){
-//    free(driver);
-//}
+void DriverDestroy(Driver driver){
+    free(driver->driver_name);
+    free(driver);
+}
 
 
 int DriverGetId (Driver driver) {

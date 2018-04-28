@@ -19,7 +19,7 @@ typedef enum driverStatus {
 
 
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId);
-//void   DriverDestroy(Driver driver);
+void   DriverDestroy(Driver driver);
 const char* DriverGetName(Driver driver);
 int DriverGetId(Driver driver);
 Team  DriverGetTeam(Driver driver);

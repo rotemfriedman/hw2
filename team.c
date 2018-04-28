@@ -59,3 +59,7 @@ int TeamGetPoints(Team team, TeamStatus *status) {
         return total_points;
     }
 }
+
+void TeamDestroy(Team team){
+    free(team->name_team);
+}

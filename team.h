@@ -18,7 +18,7 @@ typedef enum driverNumber {FIRST_DRIVER, SECOND_DRIVER} DriverNumber;
 
 
 Team TeamCreate(TeamStatus* status, char* name);
-//void TeamDestroy(Team team);
+void TeamDestroy(Team team);
 //TeamStatus TeamAddDriver(Team team, Driver driver);
 const char * TeamGetName(Team  team);
 //Driver TeamGetDriver(Team  team, DriverNumber driver_number);

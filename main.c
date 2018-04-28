@@ -27,14 +27,15 @@ None\n\
 
     Season result;
     result= SeasonCreate(&status_season,season_info);
-   int num_teams=SeasonGetNumberOfTeams(result);
-    int num_drivers=SeasonGetNumberOfDrivers(result);
-    printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
-    DriverSetSeason(d1, result);
 
-    int poi=DriverGetPoints(NULL,&status_driver);
-    printf("poi=%d\n",poi);
-    printf("status=%d", status_driver);
+    //int num_teams=SeasonGetNumberOfTeams(result);
+   // int num_drivers=SeasonGetNumberOfDrivers(result);
+   // printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
+   // DriverSetSeason(d1, result);
+
+  //  int poi=DriverGetPoints(NULL,&status_driver);
+   // printf("poi=%d\n",poi);
+   // printf("status=%d", status_driver);
 
 //    TeamStatus team_status=TEAM_STATUS_OK;
   //  Driver d1;
