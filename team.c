@@ -66,27 +66,47 @@ void TeamDestroy(Team team){
     free(team->name_team);
 }
 
-TeamStatus TeamAddDriver(Team team, Driver driver){
+TeamStatus TeamAddDriver(Team team, Driver driver) {
     TeamStatus status;
-    if (team == NULL || driver == NULL){
-        status=TEAM_NULL_PTR;
+    if (team == NULL || driver == NULL) {
+        status = TEAM_NULL_PTR;
         return status;
     }
-    if((team->first_driver != NULL) && (team->second_driver != NULL)){     //there is no place to more driver
-        status=TEAM_FULL;
+    if ((team->first_driver != NULL) && (team->second_driver != NULL)) {     //there is no place to more driver
+        status = TEAM_FULL;
         return status;
     }
-    if(team->first_driver == NULL){
-        team->first_driver=driver;
-        status=TEAM_STATUS_OK;
+    if (team->first_driver == NULL) {
+        team->first_driver = driver;
+        status = TEAM_STATUS_OK;
+        return status;
+    } else {
+        team->second_driver = driver;
+        status = TEAM_STATUS_OK;
         return status;
     }
-    else {
-        team->second_driver=driver;
-        status=TEAM_STATUS_OK;
-        return status;
-    }
-
-
 }
+
+    Driver TeamGetDriver(Team team, DriverNumber driver_number){
+        if(team==NULL)
+            return NULL;
+        if((driver_number != FIRST_DRIVER) && (driver_number != SECOND_DRIVER) ) //check also that driver number diff from NULL
+            return  NULL;
+        if(driver_number == FIRST_DRIVER) {
+            if(team->first_driver==NULL)
+                return NULL;
+            else
+                return team->first_driver;
+        }
+        else {
+                if(team->second_driver==NULL)
+                    return NULL;
+                else
+                    return team->second_driver;
+            }
+
+        }
+
+
+
 

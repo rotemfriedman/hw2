@@ -9,7 +9,7 @@
 int main() {
     DriverStatus status_driver = DRIVER_STATUS_OK;
     SeasonStatus status_season = SEASON_OK;
-    Driver d1=DriverCreate(&status_driver,"Lewis Hamilton",1);
+    TeamStatus status_team=TEAM_STATUS_OK;
     char* season_info="\
 2018\n\
 Folo\n\
@@ -26,16 +26,12 @@ Fernando Alonso\n\
 shaked\n\
 ";
 
-    Season result;
-    result= SeasonCreate(&status_season,season_info);
-    SeasonDestroy(result);
-
-    //  DriverSetSeason(d1,result);
-   // status_driver= DriverAddRaceResult(NULL,1);
-    // assert(status_driver==INVALID_DRIVER);
-
-
-  //  print_points(d1);
+ //*   Season result;
+    //result= SeasonCreate(&status_season,season_info);
+    //DriverSetSeason(d1,result);
+    //status_driver= DriverAddRaceResult(NULL,1);
+     //assert(status_driver==INVALID_DRIVER);
+    //print_points(d1);
 
 
     // int num_teams=SeasonGetNumberOfTeams(result);
@@ -47,15 +43,16 @@ shaked\n\
    // printf("poi=%d\n",poi);
 
 //    TeamStatus team_status=TEAM_STATUS_OK;
-  //  Driver d1;
-  //  d1=DriverCreate(&status,"avi",1323);
-    //Team t1=TeamCreate(&team_status,"chevrolet");
- //   const char* check=TeamGetName(NULL);
- //  if(check==0)
-  //     printf("yes,DriverGetName");
-  //  else
-   //     printf("not,DriverGetName");
-
+Driver d1=DriverCreate(&status_driver,"avi",1323);
+    Driver d2=DriverCreate(&status_driver,"or",23);
+    Team t1=TeamCreate(&status_team,"chevrolet");
+    TeamAddDriver(t1, d1);
+    TeamAddDriver(t1, d2);
+    Driver d3;
+    d3=TeamGetDriver(NULL,SECOND_DRIVER);
+   // if(d3!=NULL)
+    //DriverSetTeam(d1,t1);
+    //assert(strcmp(TeamGetName(DriverGetTeam(d1)),"evrolet")==0);
     //DriverSetTeam(d1,t1);
   //  int result=DriverGetId(d1);
    // assert(result==123);
