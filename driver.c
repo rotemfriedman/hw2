@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+static Season driverGetSeason (Driver driver);       //return the season of the driver
+
+
 struct driver {
     int id;
     char* driver_name;
@@ -110,4 +113,8 @@ DriverStatus DriverAddRaceResult(Driver driver, int position){
     driver->points+=y;
     return DRIVER_STATUS_OK;
 
+}
+
+static Season driverGetSeason (Driver driver){
+    return driver->driver_season;
 }
