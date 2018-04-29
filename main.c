@@ -29,6 +29,9 @@ shaked\n\
     Season result;
     result= SeasonCreate(&status_season,season_info);
     SeasonDestroy(result);
+    DriverSetSeason(d1, result);
+    int poi=DriverGetPoints(d1,&status_driver);
+printf("points=%d", poi);
 
     //  DriverSetSeason(d1,result);
    // status_driver= DriverAddRaceResult(NULL,1);
@@ -41,14 +44,10 @@ shaked\n\
     // int num_teams=SeasonGetNumberOfTeams(result);
    // int num_drivers=SeasonGetNumberOfDrivers(result);
    // printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
-   // DriverSetSeason(d1, result);
 
-  //  int poi=DriverGetPoints(NULL,&status_driver);
    // printf("poi=%d\n",poi);
 
 //    TeamStatus team_status=TEAM_STATUS_OK;
-  //  Driver d1;
-  //  d1=DriverCreate(&status,"avi",1323);
     //Team t1=TeamCreate(&team_status,"chevrolet");
  //   const char* check=TeamGetName(NULL);
  //  if(check==0)
