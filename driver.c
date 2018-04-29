@@ -67,7 +67,6 @@ Team DriverGetTeam(Driver driver) {
 void DriverDestroy(Driver driver){
     free(driver->driver_name);
     free(driver);
-
 }
 
 

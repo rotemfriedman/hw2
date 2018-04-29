@@ -14,6 +14,21 @@ static void destroyMyArray (Team *team, Driver *driver);                     //f
 static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
 static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
 ///////////////////////////////////////////////////////////////////////////////////////////////
+//SeasonGetDriversStandings help and SeasonGetTeamsStandings help
+static void seasonMinSort(Driver *array_drivers,int size_array){
+    int length;
+    for(length=size_array;length>1;length--) {
+        int i_min = index_of_max(array_drivers, length);
+        swap(&array_drivers[i_min],&array_drivers[length - 1]);
+    }
+}
+
+static void seasonn_Swap(Driver *drivers1,Driver *drivers2)
+{
+   Driver temp = drivers1;
+    drivers1 = drivers2;
+    drivers2 = temp;
+}
 
 
 struct season {
@@ -171,6 +186,7 @@ int SeasonGetNumberOfTeams(Season season){
 // *every index in the team array and in the driver array
 // *the team array and the driver array
 // *the stract season
+
 void   SeasonDestroy(Season season){
     int number_of_teams=season->number_of_teams;
     int number_of_drivers=season->number_of_drivers;
