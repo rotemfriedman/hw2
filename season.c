@@ -17,8 +17,8 @@ static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, 
 //SeasonGetDriversStandings help and SeasonGetTeamsStandings help
 static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
 static void seasonMinSortDriver(Season season, Driver *array_drivers,int size_array);
-static Team * seasonCopyTheArrayTeam(Season season, Team * array_team, int size_of_array);
-static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array);
+static Driver * seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
+static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int size_of_array);
 
 struct season {
     int year;
@@ -194,25 +194,25 @@ Team* SeasonGetTeamsStandings(Season season){
 }
 
 
-static Team * seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_array){
+static Driver * seasonCopyTheArrayDriver(Season season,Driver * array_drivers, int size_of_array){
     for(int i=0; i<size_of_array; i++){
-        array_team[i]=season->array_team[i];
+        array_drivers[i]=season->array_drivers[i];
     }
 }
 
 
-static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array){
-    TeamStatus * team_status=TEAM_STATUS_OK;
+static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int size_of_array){
+    TeamStatus * driver_status;
     int i, index_min=0;
-    int points_min=TeamGetPoints(season->array_team[0], team_status);
-    if(*team_status == TEAM_NULL_PTR){
+    int points_min=DriverGetPoints(season->array_drivers[0], *driver_status);
+    if(*driver_status == INVALID_DRIVER){
         return NULL;
     }
     int points_in_index_i;
     for(i=1; i<size_of_array; i++)
     {
-        points_in_index_i=TeamGetPoints(season->array_team[i], team_status);
-        if(*team_status == TEAM_NULL_PTR){
+        points_in_index_i=DriverGetPoints(season->array_drivers[0], driver_status);
+        if(*driver_status == INVALID_DRIVER){
             return NULL;
         }
         if(points_min >= points_in_index_i){
@@ -235,3 +235,4 @@ static void seasonSwapDriver(Driver *drivers1,Driver *drivers2) {
     *drivers1 = *drivers2;
     *drivers2 = temp;
 }
+
