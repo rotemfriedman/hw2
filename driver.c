@@ -13,6 +13,10 @@ struct driver {
     Season driver_season;
 };
 
+//*Get a driver, and a number of his position in a race.*//
+//*The func’ update the points of the driver.*//
+
+
 //*Get a driver and a team. The func’ update the deriver->team to be the current team the the func’ get.*//
 void DriverSetTeam(Driver driver, Team team){
     driver->driver_team=team;
@@ -64,6 +68,7 @@ Team DriverGetTeam(Driver driver) {
 void DriverDestroy(Driver driver){
     free(driver->driver_name);
     free(driver);
+
 }
 
 
@@ -89,4 +94,23 @@ int DriverGetPoints(Driver driver, DriverStatus* status){
         *status=DRIVER_STATUS_OK;
         return driver->points;
     }
+}
+
+
+DriverStatus DriverAddRaceResult(Driver driver, int position){
+    if( driver == NULL )
+    {
+        return INVALID_DRIVER;
+    }
+    if(position<=0)
+        return INVALID_POSITION;
+    if(driver-> driver_season==NULL)
+        return SEASON_NOT_ASSIGNED;
+    int x= SeasonGetNumberOfDrivers(driver->driver_season);
+    if(position>x)
+        return INVALID_POSITION;
+    int y= x-position;
+    driver->points+=y;
+    return DRIVER_STATUS_OK;
+
 }
