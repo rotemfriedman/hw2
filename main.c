@@ -45,7 +45,7 @@ printf("points=%d", poi);
    // int num_drivers=SeasonGetNumberOfDrivers(result);
    // printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
 
-   // printf("poi=%d\n",poi);
+    printf("poi=%d\n",poi);
 
 //    TeamStatus team_status=TEAM_STATUS_OK;
     //Team t1=TeamCreate(&team_status,"chevrolet");
