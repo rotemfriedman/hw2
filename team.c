@@ -64,6 +64,9 @@ int TeamGetPoints(Team team, TeamStatus *status) {
 
 void TeamDestroy(Team team){
     free(team->name_team);
+    DriverDestroy(team->first_driver);
+    DriverDestroy(team->second_driver);
+    free(team);
 }
 
 TeamStatus TeamAddDriver(Team team, Driver driver) {
