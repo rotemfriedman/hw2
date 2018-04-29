@@ -18,7 +18,6 @@ void DriverSetTeam(Driver driver, Team team){
     driver->driver_team=team;
 }
 
-
 const char* DriverGetName(Driver driver){
     if (driver==NULL)
         return NULL;
@@ -41,6 +40,8 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
     new_driver->id = driverId;
     strcpy(new_driver->driver_name, driver_name);
     *status = DRIVER_STATUS_OK;
+    new_driver->driver_team=NULL;
+    new_driver->driver_season=NULL;
     return new_driver;
 
 }
