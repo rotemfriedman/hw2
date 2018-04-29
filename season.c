@@ -15,21 +15,10 @@ static void destroyArrayByIndex (int team_index, int driver_index, Season season
 static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //SeasonGetDriversStandings help and SeasonGetTeamsStandings help
-static void seasonMinSort(Driver *array_drivers,int size_array){
-    int length;
-    for(length=size_array;length>1;length--) {
-        int i_min = index_of_max(array_drivers, length);
-        swap(&array_drivers[i_min],&array_drivers[length - 1]);
-    }
-}
-
-static void seasonn_Swap(Driver *drivers1,Driver *drivers2)
-{
-   Driver temp = drivers1;
-    drivers1 = drivers2;
-    drivers2 = temp;
-}
-
+static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
+static void seasonMinSortDriver(Season season, Driver *array_drivers,int size_array);
+static Team * seasonCopyTheArrayTeam(Season season, Team * array_team, int size_of_array);
+static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array);
 
 struct season {
     int year;
@@ -193,4 +182,56 @@ void   SeasonDestroy(Season season){
     destroyArrayByIndex (number_of_teams, number_of_drivers, season ); //destroy by index the 2 arrays
     destroyMyArray (season->array_team, season->array_drivers);          //destroy the 2 arrays
     free(season);
+}
+
+Team* SeasonGetTeamsStandings(Season season){
+    int size_array=season->number_of_teams;
+    Team * new_array_teams=malloc(sizeof(*new_array_teams)*size_array);
+    if (new_array_teams == NULL){
+        return NULL;
+    }
+
+}
+
+
+static Team * seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_array){
+    for(int i=0; i<size_of_array; i++){
+        array_team[i]=season->array_team[i];
+    }
+}
+
+
+static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array){
+    TeamStatus * team_status=TEAM_STATUS_OK;
+    int i, index_min=0;
+    int points_min=TeamGetPoints(season->array_team[0], team_status);
+    if(*team_status == TEAM_NULL_PTR){
+        return NULL;
+    }
+    int points_in_index_i;
+    for(i=1; i<size_of_array; i++)
+    {
+        points_in_index_i=TeamGetPoints(season->array_team[i], team_status);
+        if(*team_status == TEAM_NULL_PTR){
+            return NULL;
+        }
+        if(points_min >= points_in_index_i){
+            index_min=i;
+        }
+    }
+    return index_min;
+}
+
+static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_array){
+    int length;
+    for(length=size_array;length>1;length--) {
+        int i_min = seasonFindTheMin(season,array_drivers, length);
+        seasonSwapDriver(&array_drivers[i_min],&array_drivers[length - 1]);
+    }
+}
+
+static void seasonSwapDriver(Driver *drivers1,Driver *drivers2) {
+    Driver temp = *drivers1;
+    *drivers1 = *drivers2;
+    *drivers2 = temp;
 }
