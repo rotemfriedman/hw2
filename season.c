@@ -53,7 +53,6 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         destroyMySeason(new_season);    //this function return NULL
     }
     temp_driver=new_season->array_drivers;
-
     insertTheDataToSeason(new_season, my_season_info, temp_team, temp_driver);
 
     free(my_season_info);
@@ -161,4 +160,16 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
 
 int SeasonGetNumberOfTeams(Season season){
     return season->number_of_teams;
+}
+
+// in this function, we nedd to free some things:
+// *every index in the team array and in the driver array
+// *the team array and the driver array
+// *the stract season
+void   SeasonDestroy(Season season){
+    int number_of_teams=season->number_of_teams;
+    int number_of_drivers=season->number_of_drivers;
+    destroyArrayByIndex (number_of_teams, number_of_drivers, season ); //destroy by index the 2 arrays
+    destroyMyArray (season->array_team, season->array_drivers);          //destroy the 2 arrays
+    free(season);
 }

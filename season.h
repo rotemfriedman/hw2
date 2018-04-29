@@ -18,7 +18,7 @@ typedef enum seasonStatus {
     SEASON_NULL_PTR} SeasonStatus;
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info);
-//void   SeasonDestroy(Season season);
+void   SeasonDestroy(Season season);
 //Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status);
 //Driver* SeasonGetDriversStandings(Season season);
 //Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus status);

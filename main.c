@@ -28,10 +28,14 @@ shaked\n\
 
     Season result;
     result= SeasonCreate(&status_season,season_info);
-    DriverSetSeason(d1,result);
-    status_driver= DriverAddRaceResult(NULL,1);
-     assert(status_driver==INVALID_DRIVER);
-    print_points(d1);
+    SeasonDestroy(result);
+
+    //  DriverSetSeason(d1,result);
+   // status_driver= DriverAddRaceResult(NULL,1);
+    // assert(status_driver==INVALID_DRIVER);
+
+
+  //  print_points(d1);
 
 
     // int num_teams=SeasonGetNumberOfTeams(result);
