@@ -27,6 +27,8 @@ Team TeamCreate(TeamStatus* status, char * name){
     }
     strcpy(new_team->name_team, name);
     *status = DRIVER_STATUS_OK;
+   new_team->first_driver=NULL;
+   new_team->second_driver=NULL;
     return new_team;
 
 }
@@ -63,3 +65,28 @@ int TeamGetPoints(Team team, TeamStatus *status) {
 void TeamDestroy(Team team){
     free(team->name_team);
 }
+
+TeamStatus TeamAddDriver(Team team, Driver driver){
+    TeamStatus status;
+    if (team == NULL || driver == NULL){
+        status=TEAM_NULL_PTR;
+        return status;
+    }
+    if((team->first_driver != NULL) && (team->second_driver != NULL)){     //there is no place to more driver
+        status=TEAM_FULL;
+        return status;
+    }
+    if(team->first_driver == NULL){
+        team->first_driver=driver;
+        status=TEAM_STATUS_OK;
+        return status;
+    }
+    else {
+        team->second_driver=driver;
+        status=TEAM_STATUS_OK;
+        return status;
+    }
+
+
+}
+

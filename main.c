@@ -8,7 +8,7 @@
 int main() {
     DriverStatus status_driver = DRIVER_STATUS_OK;
     SeasonStatus status_season = SEASON_OK;
-    Driver d1=DriverCreate(&status_driver,"Lewis Hamilton",1);
+    TeamStatus status_team = TEAM_STATUS_OK;
     char* season_info="\
 2018\n\
 Folo\n\
@@ -25,12 +25,21 @@ Fernando Alonso\n\
 shaked\n\
 ";
 
-    Season result;
-    result= SeasonCreate(&status_season,season_info);
+    Team skoda = TeamCreate(&status_team, "skoda_fabia");
+    Driver d1=DriverCreate(&status_driver,"Lewis Hamilton",1);
 
-    int num_teams=SeasonGetNumberOfTeams(result);
-    int num_drivers=SeasonGetNumberOfDrivers(result);
-    printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
+    status_team=TeamAddDriver(skoda,d1);
+    assert(status_team == TEAM_STATUS_OK);
+    status_team=TeamAddDriver(skoda,d1);
+    assert(status_team == TEAM_STATUS_OK);
+    status_team=TeamAddDriver(skoda,d1);
+    assert(status_team == TEAM_FULL);
+    //Season result;
+    //result= SeasonCreate(&status_season,season_info);
+
+    //int num_teams=SeasonGetNumberOfTeams(result);
+    //int num_drivers=SeasonGetNumberOfDrivers(result);
+    //printf("drivers=%d,teams=%d\n", num_drivers, num_teams);
    // DriverSetSeason(d1, result);
 
   //  int poi=DriverGetPoints(NULL,&status_driver);
