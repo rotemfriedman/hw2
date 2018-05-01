@@ -80,7 +80,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
 
 //copy the file season_info, to file my_season_info.
 static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status){
-    int length_of_season_info=strlen(season_info);       //get the length of the file - season_info
+    int length_of_season_info=strlen(season_info)+1;       //get the length of the file - season_info
     char* copy_season_info=malloc(sizeof(char)*length_of_season_info);
     if(copy_season_info == NULL) {
         *status = SEASON_MEMORY_ERROR;
@@ -168,7 +168,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         }
         DriverSetTeam(*temp_driver, *temp_team);
         DriverSetSeason(*temp_driver, season);
-      //  status_team = TeamAddDriver(*temp_team, *temp_driver);
+        status_team = TeamAddDriver(*temp_team, *temp_driver);
         get_id++;                         //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                 //continue to the next team

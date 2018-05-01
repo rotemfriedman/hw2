@@ -27,17 +27,16 @@ Fernando Alonso\n\
 None\n\
 ";
     Season season = SeasonCreate(&season_status,season_info);
- int num_of_driver=SeasonGetNumberOfDrivers(season);
-    printf("num_of_driv=%d\n",num_of_driver);
-    int race_results[num_of_driver] = {7,1,3,2,4,5,6};
+    int num_of_driver=SeasonGetNumberOfDrivers(season);
+    int race_results[7] = {7,1,3,2,4,5,6};
     season_status = SeasonAddRaceResult( season, race_results);
     assert(season_status == SEASON_OK);
     printpoint(season);
-    int race_results[num_of_driver] = {1,7,3,4,5,6,2};
-    season_status = SeasonAddRaceResult( season, race_results);
+    int race_results2[7] = {1,7,3,4,5,6,2};
+    season_status = SeasonAddRaceResult( season, race_results2);
     assert(season_status == SEASON_OK);
     printpoint(season);
-    Driver d1=SeasonGetDriverByPosition(season,1,season_status);
+    Driver d1=SeasonGetDriverByPosition(season,2,&season_status);
     int x=DriverGetId(d1);
     printf("the driver that his position in the second place : %x\n",x);
 
