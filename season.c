@@ -200,7 +200,7 @@ void   SeasonDestroy(Season season){
 }
 
 Team* SeasonGetTeamsStandings(Season season){
-    TeamStatus * team_status;
+    TeamStatus * team_status = NULL;
     int size_array=season->number_of_teams;
     Team * new_array_teams=malloc(sizeof(*new_array_teams)*size_array);
     if (new_array_teams == NULL){
@@ -366,7 +366,7 @@ static void seasonSwapDriver(Driver *drivers1,Driver *drivers2) {
 
 
 Driver* SeasonGetDriversStandings(Season season){
-    DriverStatus * driver_status;
+    DriverStatus * driver_status = NULL;
     int size_array=season->number_of_drivers;
     Driver *new_array_drivers=malloc(sizeof(*new_array_drivers)*size_array);
     if(new_array_drivers==NULL)

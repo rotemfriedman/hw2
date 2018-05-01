@@ -37,8 +37,8 @@ None\n\
     assert(season_status == SEASON_OK);
     printpoint(season);
     Driver d1=SeasonGetDriverByPosition(season,2,&season_status);
-    int x=DriverGetId(d1);
-    printf("the driver that his position in the second place : %x\n",x);
+   // int x=DriverGetId(d1);
+    //printf("the driver that his position in the second place : %x\n",x);
 
     //int DriverGetId(Driver driver);
     //Driver * temp_drive = Season_help_check (season)
