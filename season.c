@@ -298,7 +298,21 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
         if(*driver_status == INVALID_DRIVER){
             return NULL;
         }
-        if(points_min >= points_in_index_i){
+        if(points_min==points_in_index_i){
+            int id_index_min=DriverGetId(season->array_drivers[index_min]);
+            int id_i=DriverGetId(season->array_drivers[i]);
+            for(int j=0;j<season->number_of_drivers;j++)
+            {
+            if(season->race_result[j]==id_index_min){
+                break;
+            }
+                else if(season->race_result[j]==id_i){
+                index_min=i;
+                break;
+                }
+            }
+        }
+        if(points_min > points_in_index_i){
             index_min=i;
         }
     }
@@ -393,7 +407,7 @@ void printpoint(Season season)
     DriverStatus status;
 for(int i=0;i<season->number_of_drivers;i++) {
     int x = DriverGetPoints(season->array_drivers[i], &status);
-    printf("the point of the driver number %d is %d\n", i+1,x);
+    printf("the point of the driver number %d his points is %d\n", i+1,x);
 }
 }
 
