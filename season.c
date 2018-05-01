@@ -240,7 +240,7 @@ static void seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_
 
 
 static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status){
-    int i, index_min=0;
+    int i,j, index_min=0;
     int points_min=TeamGetPoints(season->array_team[0], team_status);
     if(*team_status == TEAM_NULL_PTR){
         return NULL;
@@ -252,7 +252,33 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
         if(*team_status == TEAM_NULL_PTR){
             return NULL;
         }
-        if(points_min >= points_in_index_i){
+        if(points_min = points_in_index_i){
+            Driver driver1_for_index_min = TeamGetDriver(season->array_team[index_min],FIRST_DRIVER);
+            Driver driver2_for_index_min  = TeamGetDriver(season->array_team[index_min],SECOND_DRIVER);
+            Driver driver3_for_index_i  = TeamGetDriver(season->array_team[i],FIRST_DRIVER);
+            Driver driver4_for_index_i  = TeamGetDriver(season->array_team[i],SECOND_DRIVER);
+            int id1_index_min = DriverGetId(driver1_for_index_min);
+            int id2_index_min = DriverGetId(driver2_for_index_min);
+            int id3_index_i = DriverGetId(driver3_for_index_i);
+            int id4_index_i = DriverGetId(driver4_for_index_i);
+            for(j=0; j< season->number_of_drivers; j++){
+                if(season->race_result[j] == id1_index_min){
+                    index_min=i;
+                    break;
+                }
+                else if(season->race_result[j] == id2_index_min){
+                    index_min=i;
+                    break;
+                }
+                else if(season->race_result[j] == id3_index_i){
+                    break;
+                }
+                else if(season->race_result[j] == id4_index_i){
+                    break;
+                }
+            }
+        }
+            if(points_min > points_in_index_i){
             index_min=i;
         }
     }
@@ -269,6 +295,7 @@ static void seasonMinSortTeam(Season season, Team *array_teams,int size_array, T
         }
         seasonSwapTeam(&array_teams[i_min],&array_teams[length - 1]);
     }
+
 }
 
 static void seasonSwapTeam(Team *teams1,Team *teams2){
