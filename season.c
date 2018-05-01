@@ -199,14 +199,14 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
         return 0;
     }
     int points_in_index_i;
-    for(i=1; i<size_of_array; i++)
-    {
-        points_in_index_i=DriverGetPoints(season->array_drivers[0], driver_status);
-        if(*driver_status == INVALID_DRIVER){
-            return 0;
-        }
-        if(points_min >= points_in_index_i){
-            index_min=i;
+            for(i=1; i<size_of_array; i++)
+            {
+                points_in_index_i=DriverGetPoints(season->array_drivers[0], driver_status);
+                if(*driver_status == INVALID_DRIVER){
+                    return 0;
+                }
+                if(points_min >= points_in_index_i){
+                    index_min=i;
         }
     }
     *driver_status=DRIVER_STATUS_OK;
