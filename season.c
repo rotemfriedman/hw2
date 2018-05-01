@@ -26,6 +26,7 @@ static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
 static void* seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status);
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
 static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int size_of_array,DriverStatus *driver_status);
+static void idGetDriver(Season season);
 
 struct season {
     int year;
@@ -33,6 +34,7 @@ struct season {
     Team *array_team;
     int number_of_drivers;
     Driver *array_drivers;
+    int * race_result;
 };
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
@@ -152,7 +154,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
             }
             DriverSetTeam(*temp_driver, *temp_team);
             DriverSetSeason(*temp_driver, season);
-            status_team = TeamAddDriver(*temp_team, *temp_driver);
+            //status_team = TeamAddDriver(*temp_team, *temp_driver);
             get_id++;                                 //get_id +1 to the next driver
             temp_driver++;
             token=strtok(NULL, "\n");                 //continue to the driver
@@ -167,7 +169,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         }
         DriverSetTeam(*temp_driver, *temp_team);
         DriverSetSeason(*temp_driver, season);
-        status_team = TeamAddDriver(*temp_team, *temp_driver);
+      //  status_team = TeamAddDriver(*temp_team, *temp_driver);
         get_id++;                         //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                 //continue to the next team
@@ -345,8 +347,43 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
         *status = BAD_SEASON_INFO;
         return NULL;
     }else{
-        * status = SEASON_OK;
+        *status = SEASON_OK;
         return new_array_drivers[position-1];
 
     }
 }
+//* the function get id and return the driver from the season with this id*//
+static void idGetDriver(Season season)
+{
+    int size_array=season->number_of_drivers;
+    int driver_id;
+    for(int j=0;j<size_array;j++)      //position array
+    {
+        for(int i=0;i<size_array;i++) {
+            driver_id = DriverGetId(season->array_drivers[i]);
+            if (driver_id == season->race_result[j]) {
+                DriverAddRaceResult(season->array_drivers[i], j + 1);
+                break;
+            }
+        }
+    }
+}
+
+
+SeasonStatus SeasonAddRaceResult(Season season, int* results){
+    if(season==NULL||*results==NULL)
+        return SEASON_NULL_PTR;
+    season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
+    for(int i=0; i<season->number_of_drivers; i++){
+        season->race_result[i]=results[i];
+    }
+    idGetDriver(season);
+    return SEASON_OK;
+}
+
+ //void printpoint(Season season)
+//{
+//for(int i=0;i<season->number_of_drivers;i++)
+  //  printf()
+
+//}
