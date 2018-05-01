@@ -25,6 +25,6 @@ Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus status);
 Team* SeasonGetTeamsStandings(Season season);
 int SeasonGetNumberOfDrivers(Season season);
 int SeasonGetNumberOfTeams(Season season);
-//SeasonStatus SeasonAddRaceResult(Season season, int* results);
+SeasonStatus SeasonAddRaceResult(Season season, int* results);
 
 #endif /* SEASON_H_ */
