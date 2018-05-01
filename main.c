@@ -8,9 +8,26 @@
 #include <string.h>
 
 int main() {
-    DriverStatus status_driver = DRIVER_STATUS_OK;
-    SEASON_OK
-    assert(status_season==SEASON_NULL_PTR);
+    SeasonStatus season_status;
+    char* season_info="\
+2018\n\
+Ferrari\n\
+Sebastian Vettel\n\
+Kimi Raikonen\n\
+Mercedes\n\
+Lewis Hamilton\n\
+Valtteri Bottas\n\
+RedBull Racing\n\
+Daniel\n\
+Max  Verstappen\n\
+McLaren\n\
+Fernando Alonso\n\
+None\n\
+";
+    Season season = SeasonCreate(&season_status,season_info);
+    int race_results[7] = {7, 1,3,2,4,5,6};
+
+    assert(season_status==SEASON_NULL_PTR);
 
     // Team * new_array_team = SeasonGetTeamsStandings(result);
     // int num_of_teams=SeasonGetNumberOfTeams(result);
