@@ -36,7 +36,6 @@ struct season {
 };
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
-    Team *temp_team;           //pointer that help us to insert the data to the Team's array
     Driver *temp_driver;       //pointer that help us to insert the data to the Driver's araay
     Season new_season = malloc(sizeof(*new_season));   //create the new season
     if(new_season == NULL) {                     //free the season. return NULL
@@ -62,6 +61,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         free (new_season->array_team);
         destroyMySeason(new_season);
     }
+    Team *temp_team;           //pointer that help us to insert the data to the Team's array
     temp_team = new_season->array_team;
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
     if((new_season->array_drivers) == NULL) {
@@ -78,7 +78,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
 
 //copy the file season_info, to file my_season_info.
 static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status){
-    int length_of_season_info=strlen(season_info);       //get the length of the file - season_info
+    int length_of_season_info=strlen(season_info)+1;       //get the length of the file - season_info
     char* copy_season_info=malloc(sizeof(char)*length_of_season_info);
     if(copy_season_info == NULL) {
         *status = SEASON_MEMORY_ERROR;
@@ -119,8 +119,8 @@ static void destroyArrayByIndex (int team_index, int driver_index, Season season
     destroyMyArray(season->array_team, season->array_drivers);       //free the arrays of team and the array of driver
 }
 
-static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season){
-    int difference_team=temp_team-(season->array_team);
+static Season destroyFinishInCreateSeason(Team *temp_team_for_func, Driver *temp_driver, Season season){
+    int difference_team=(temp_team_for_func)-(season->array_team);
     int difference_driver=temp_driver-(season->array_drivers);
     destroyArrayByIndex (difference_team, difference_driver, season);
     destroyMySeason(season);
@@ -347,6 +347,9 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
     }else{
         * status = SEASON_OK;
         return new_array_drivers[position-1];
-
     }
+}
+
+Driver* Season_help_check (Season season){
+    return season->array_drivers;
 }

@@ -27,4 +27,6 @@ int SeasonGetNumberOfDrivers(Season season);
 int SeasonGetNumberOfTeams(Season season);
 SeasonStatus SeasonAddRaceResult(Season season, int* results);
 
+//Driver* Season_help_check (Season season);
+
 #endif /* SEASON_H_ */
