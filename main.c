@@ -25,7 +25,15 @@ Fernando Alonso\n\
 None\n\
 ";
     Season season = SeasonCreate(&season_status,season_info);
-    //int race_results[7] = {7, 1,3,2,4,5,6};
+ int num_of_driver=SeasonGetNumberOfDrivers(season);
+    printf("num_of_driv=%d\n",num_of_driver);
+    int race_results[7] = {7, 1,3,2,4,5,6};
+    season_status = SeasonAddRaceResult( season, race_results);
+    assert(season_status == SEASON_OK);
+    printpoint(season);
+    //int DriverGetId(Driver driver);
+    //Driver * temp_drive = Season_help_check (season)
+
 
   //  assert(season_status==SEASON_NULL_PTR);
 

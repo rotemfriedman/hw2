@@ -17,7 +17,6 @@ typedef enum seasonStatus {
     BAD_SEASON_INFO,
     SEASON_NULL_PTR} SeasonStatus;
 
- //void printpoint(Season season);
 Season SeasonCreate(SeasonStatus* status,const char* season_info);
 void   SeasonDestroy(Season season);
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status);
@@ -28,6 +27,7 @@ int SeasonGetNumberOfDrivers(Season season);
 int SeasonGetNumberOfTeams(Season season);
 SeasonStatus SeasonAddRaceResult(Season season, int* results);
 
-//Driver* Season_help_check (Season season);
+Driver* Season_help_check (Season season);///////////////////////not good
+void printpoint(Season season);//////////////not good
 
 #endif /* SEASON_H_ */

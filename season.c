@@ -371,7 +371,7 @@ static void idGetDriver(Season season)
 
 
 SeasonStatus SeasonAddRaceResult(Season season, int* results){
-    if(season==NULL||*results==NULL)
+    if(season==NULL||results==NULL)
         return SEASON_NULL_PTR;
     season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
     for(int i=0; i<season->number_of_drivers; i++){
@@ -381,9 +381,19 @@ SeasonStatus SeasonAddRaceResult(Season season, int* results){
     return SEASON_OK;
 }
 
- //void printpoint(Season season)
-//{
-//for(int i=0;i<season->number_of_drivers;i++)
-  //  printf()
 
-//}
+Driver* Season_help_check (Season season){
+    return season->array_drivers;
+}
+
+
+//func that help us for check:
+void printpoint(Season season)
+{
+    DriverStatus status;
+for(int i=0;i<season->number_of_drivers;i++) {
+    int x = DriverGetPoints(season->array_drivers[i], &status);
+    printf("the point of the driver number %d is %d\n", i+1,x);
+}
+}
+
