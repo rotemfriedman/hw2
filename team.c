@@ -27,8 +27,8 @@ Team TeamCreate(TeamStatus* status, char * name){
     }
     strcpy(new_team->name_team, name);
     *status = DRIVER_STATUS_OK;
-   new_team->first_driver=NULL;
-   new_team->second_driver=NULL;
+    new_team->first_driver=NULL;
+    new_team->second_driver=NULL;
     return new_team;
 
 }
@@ -90,22 +90,22 @@ TeamStatus TeamAddDriver(Team team, Driver driver) {
     }
 }
 
-    Driver TeamGetDriver(Team team, DriverNumber driver_number){
-        if(team==NULL)
+Driver TeamGetDriver(Team team, DriverNumber driver_number){
+    if(team==NULL)
+        return NULL;
+    if((driver_number != FIRST_DRIVER) && (driver_number != SECOND_DRIVER) ) //check also that driver number diff from NULL
+        return  NULL;
+    if(driver_number == FIRST_DRIVER) {
+        if(team->first_driver==NULL)
             return NULL;
-        if((driver_number != FIRST_DRIVER) && (driver_number != SECOND_DRIVER) ) //check also that driver number diff from NULL
-            return  NULL;
-        if(driver_number == FIRST_DRIVER) {
-            if(team->first_driver==NULL)
-                return NULL;
-            else
-                return team->first_driver;
-        }
-        else {
-                if(team->second_driver==NULL)
-                    return NULL;
-                else
-                    return team->second_driver;
-            }
+        else
+            return team->first_driver;
+    }
+    else {
+        if(team->second_driver==NULL)
+            return NULL;
+        else
+            return team->second_driver;
+    }
 
-        }
+}

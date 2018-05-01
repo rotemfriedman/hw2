@@ -25,9 +25,9 @@ Fernando Alonso\n\
 None\n\
 ";
     Season season = SeasonCreate(&season_status,season_info);
-    int race_results[7] = {7, 1,3,2,4,5,6};
+    //int race_results[7] = {7, 1,3,2,4,5,6};
 
-    assert(season_status==SEASON_NULL_PTR);
+  //  assert(season_status==SEASON_NULL_PTR);
 
     // Team * new_array_team = SeasonGetTeamsStandings(result);
     // int num_of_teams=SeasonGetNumberOfTeams(result);

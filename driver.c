@@ -51,15 +51,15 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
 
 //Get a driver , and return ptr to his team. If the function get NULL, return NULL*//
 Team DriverGetTeam(Driver driver) {
-   if (driver == NULL) {
+    if (driver == NULL) {
         return NULL;
-   } else {
+    } else {
         return driver->driver_team;
     }
 }
 
 //const char* DriverGetName(Driver driver) {
- //   return driver->driver_name;
+//   return driver->driver_name;
 //}
 
 
@@ -80,7 +80,7 @@ int DriverGetId (Driver driver) {
 }
 
 void DriverSetSeason(Driver driver, Season season){
-driver->driver_season=season;
+    driver->driver_season=season;
     driver->points=0;
 }
 
