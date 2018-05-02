@@ -200,15 +200,15 @@ void   SeasonDestroy(Season season){
 }
 
 Team* SeasonGetTeamsStandings(Season season){
-    TeamStatus * team_status = NULL;
+    TeamStatus team_status=TEAM_NULL_PTR;
     int size_array=season->number_of_teams;
     Team * new_array_teams=malloc(sizeof(*new_array_teams)*size_array);
     if (new_array_teams == NULL){
         return NULL;
     }
     seasonCopyTheArrayTeam(season, new_array_teams, size_array);
-    seasonMinSortTeam(season, new_array_teams, size_array, team_status);
-    if(*team_status == TEAM_NULL_PTR){
+    seasonMinSortTeam(season, new_array_teams, size_array, &team_status);
+    if(team_status == TEAM_NULL_PTR){
         free(new_array_teams);
         return NULL;
     }
@@ -241,14 +241,14 @@ static void seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_
 
 static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status){
     int i,j, index_min=0;
-    int points_min=TeamGetPoints(season->array_team[0], team_status);
+    int points_min=TeamGetPoints(array_team[0], team_status);
     if(*team_status == TEAM_NULL_PTR){
         return NULL;
     }
     int points_in_index_i;
     for(i=1; i<size_of_array; i++)
     {
-        points_in_index_i=TeamGetPoints(season->array_team[i], team_status);
+        points_in_index_i=TeamGetPoints(array_team[i], team_status);
         if(*team_status == TEAM_NULL_PTR){
             return NULL;
         }
@@ -291,7 +291,7 @@ static void seasonMinSortTeam(Season season, Team *array_teams,int size_array, T
     for(length=size_array;length>1;length--) {
         int i_min = seasonFindTheMinTeam(season,array_teams, length, team_status);
         if( *team_status == TEAM_NULL_PTR){
-            return NULL;
+            return;
         }
         seasonSwapTeam(&array_teams[i_min],&array_teams[length - 1]);
     }
@@ -423,18 +423,36 @@ SeasonStatus SeasonAddRaceResult(Season season, int* results){
 }
 
 
+
 Driver* Season_help_check (Season season){
     return season->array_drivers;
 }
 
 
 //func that help us for check:
-void printpoint(Season season)
+void printpointDriver(Season season)
 {
     DriverStatus status;
 for(int i=0;i<season->number_of_drivers;i++) {
     int x = DriverGetPoints(season->array_drivers[i], &status);
     printf("the point of the driver number %d his points is %d\n", i+1,x);
 }
+}
+
+//func that help us for check:
+void printpointTeam(Season season)
+{
+    TeamStatus status;
+    for(int i=0;i<season->number_of_teams;i++) {
+        int x = TeamGetPoints (season->array_team[i], &status);
+        printf("the point of the driver number %d his points is %d\n", i+1,x);
+    }
+}
+
+void printPointArrayTeam(Team* array_team, int number_of_teams){
+    for(int i=0; i<number_of_teams; i++){
+       const char* name_team= TeamGetName(array_team[i]);
+        printf("the team in the place %d, is %s\n", i+1, name_team);
+    }
 }
 

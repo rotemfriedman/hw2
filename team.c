@@ -45,21 +45,21 @@ const char * TeamGetName(Team team){
 
 int TeamGetPoints(Team team, TeamStatus *status) {
     int total_points = 0;
-    DriverStatus status_driver;
+    DriverStatus status_driver=DRIVER_STATUS_OK;
     if (team == NULL){
         *status = TEAM_NULL_PTR;
         return total_points;     //total_points=0
     }
     else {
-        *status = TEAM_STATUS_OK;
         if (team->first_driver != NULL){
             total_points=DriverGetPoints(team->first_driver,&status_driver); //status_driver cant be invalid, because the first_friver!=NULL
         }
         if (team->second_driver != NULL){
             total_points+=DriverGetPoints(team->second_driver,&status_driver);
         }
-        return total_points;
     }
+    *status = TEAM_STATUS_OK;
+    return total_points;
 }
 
 void TeamDestroy(Team team){

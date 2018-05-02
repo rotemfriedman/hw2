@@ -29,14 +29,17 @@ None\n\
     Season season = SeasonCreate(&season_status,season_info);
     int num_of_driver=SeasonGetNumberOfDrivers(season);
     int race_results[7] = {7,1,3,2,4,5,6};
-    season_status = SeasonAddRaceResult( season, race_results);
-    assert(season_status == SEASON_OK);
-    printpoint(season);
-    int race_results2[7] = {1,7,3,4,5,6,2};
-    season_status = SeasonAddRaceResult( season, race_results2);
-    assert(season_status == SEASON_OK);
-    printpoint(season);
-    Driver d1=SeasonGetDriverByPosition(season,2,&season_status);
+    SeasonStatus season_status_1 = SeasonAddRaceResult(season, race_results);
+    assert(season_status_1 == SEASON_OK);
+    // int race_results2[7] = {1,7,3,4,5,6,2};
+    //  season_status = SeasonAddRaceResult( season, race_results2);
+    //assert(season_status == SEASON_OK);
+    printpointTeam(season);
+    int number_of_teams=SeasonGetNumberOfTeams(season);
+    SeasonGetTeamByPosition(season, 2, season_status);
+    /// / Team * array_team = SeasonGetTeamsStandings(season);
+    //printPointArrayTeam(array_team, number_of_teams);
+    //Driver d1=SeasonGetDriverByPosition(season,2,&season_status);
    // int x=DriverGetId(d1);
     //printf("the driver that his position in the second place : %x\n",x);
 

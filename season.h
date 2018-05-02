@@ -29,5 +29,6 @@ SeasonStatus SeasonAddRaceResult(Season season, int* results);
 
 Driver* Season_help_check (Season season);///////////////////////not good
 void printpoint(Season season);//////////////not good
-
+void printpointTeam(Season season); ///////////////////not good
+void printPointArrayTeam(Team* array_team, int number_of_teams); ///////////not good
 #endif /* SEASON_H_ */
