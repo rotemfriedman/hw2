@@ -243,14 +243,14 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
     int i,j, index_min=0;
     int points_min=TeamGetPoints(array_team[0], team_status);
     if(*team_status == TEAM_NULL_PTR){
-        return NULL;
+        return 0;
     }
     int points_in_index_i;
     for(i=1; i<size_of_array; i++)
     {
         points_in_index_i=TeamGetPoints(array_team[i], team_status);
         if(*team_status == TEAM_NULL_PTR){
-            return NULL;
+            return 0;
         }
         if(points_min = points_in_index_i){
             Driver driver1_for_index_min = TeamGetDriver(season->array_team[index_min],FIRST_DRIVER);
@@ -314,16 +314,16 @@ static void seasonCopyTheArrayDriver(Season season,Driver * array_drivers, int s
 
 static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int size_of_array,DriverStatus *driver_status){
     int i, index_min=0;
-    int points_min=DriverGetPoints(season->array_drivers[0], driver_status);
+    int points_min=DriverGetPoints(array_drivers[0], driver_status);
     if(*driver_status == INVALID_DRIVER){
-        return NULL;
+        return 0;
     }
     int points_in_index_i;
     for(i=1; i<size_of_array; i++)
     {
-        points_in_index_i=DriverGetPoints(season->array_drivers[0], driver_status);
+        points_in_index_i=DriverGetPoints(array_drivers[i], driver_status);
         if(*driver_status == INVALID_DRIVER){
-            return NULL;
+            return 0;
         }
         if(points_min==points_in_index_i){
             int id_index_min=DriverGetId(season->array_drivers[index_min]);
@@ -331,17 +331,19 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
             for(int j=0;j<season->number_of_drivers;j++)
             {
             if(season->race_result[j]==id_index_min){
-                break;
+                index_min=i;
             }
                 else if(season->race_result[j]==id_i){
-                index_min=i;
+
                 break;
                 }
             }
         }
         if(points_min > points_in_index_i){
             index_min=i;
+            points_min=points_in_index_i;
         }
+
     }
     *driver_status=DRIVER_STATUS_OK;
     return index_min;
@@ -366,14 +368,14 @@ static void seasonSwapDriver(Driver *drivers1,Driver *drivers2) {
 
 
 Driver* SeasonGetDriversStandings(Season season){
-    DriverStatus * driver_status = NULL;
+    DriverStatus driver_status = DRIVER_STATUS_OK;
     int size_array=season->number_of_drivers;
     Driver *new_array_drivers=malloc(sizeof(*new_array_drivers)*size_array);
     if(new_array_drivers==NULL)
         return NULL;
     seasonCopyTheArrayDriver(season,new_array_drivers,size_array);
-    seasonMinSortDriver(season,new_array_drivers,size_array,driver_status);
-    if(*driver_status == INVALID_DRIVER){
+    seasonMinSortDriver(season,new_array_drivers,size_array,&driver_status);
+    if(driver_status == INVALID_DRIVER){
         free(new_array_drivers);
         return NULL;
     }
@@ -414,7 +416,7 @@ static void idGetDriver(Season season)
 SeasonStatus SeasonAddRaceResult(Season season, int* results){
     if(season==NULL||results==NULL)
         return SEASON_NULL_PTR;
-    season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
+    season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);///// check the maloc and free if null!!!!
     for(int i=0; i<season->number_of_drivers; i++){
         season->race_result[i]=results[i];
     }

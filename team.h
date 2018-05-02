@@ -8,7 +8,6 @@
 typedef struct team * Team;
 
 #include"driver.h"
-
 typedef enum teamStatus {
     TEAM_STATUS_OK,
     TEAM_MEMORY_ERROR,
