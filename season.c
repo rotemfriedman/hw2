@@ -160,6 +160,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         }
         if(strcmp(token, "None")==0){
             token=strtok(NULL, "\n");                 //continue to the next team
+            temp_team++;
             continue;
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);
@@ -177,6 +178,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     season->number_of_teams=team_number;
     season->number_of_drivers=get_id-1;
 }
+
 
 int SeasonGetNumberOfDrivers(Season season){
     return season->number_of_drivers;
@@ -252,7 +254,7 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
         if(*team_status == TEAM_NULL_PTR){
             return 0;
         }
-        if(points_min = points_in_index_i){
+        if(points_min == points_in_index_i){
             Driver driver1_for_index_min = TeamGetDriver(season->array_team[index_min],FIRST_DRIVER);
             Driver driver2_for_index_min  = TeamGetDriver(season->array_team[index_min],SECOND_DRIVER);
             Driver driver3_for_index_i  = TeamGetDriver(season->array_team[i],FIRST_DRIVER);
@@ -263,10 +265,12 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
             int id4_index_i = DriverGetId(driver4_for_index_i);
             for(j=0; j< season->number_of_drivers; j++){
                 if(season->race_result[j] == id1_index_min){
+                    points_min=points_in_index_i;
                     index_min=i;
                     break;
                 }
                 else if(season->race_result[j] == id2_index_min){
+                    points_min=points_in_index_i;
                     index_min=i;
                     break;
                 }
@@ -279,7 +283,8 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
             }
         }
             if(points_min > points_in_index_i){
-            index_min=i;
+                points_min=points_in_index_i;
+                index_min=i;
         }
     }
     *team_status=TEAM_STATUS_OK;

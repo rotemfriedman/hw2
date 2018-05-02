@@ -9,13 +9,13 @@
 
 int main() {
     SeasonStatus season_status;
-    DriverStatus driver_status=DRIVER_STATUS_OK;
+    DriverStatus driver_status;
 
     char* season_info="\
 2018\n\
 Ferrari\n\
 Sebastian Vettel\n\
-Kimi Raikonen\n\
+None\n\
 Mercedes\n\
 Lewis Hamilton\n\
 Valtteri Bottas\n\
@@ -28,21 +28,21 @@ None\n\
 ";
     Season season = SeasonCreate(&season_status,season_info);
     int num_of_driver=SeasonGetNumberOfDrivers(season);
-    int race_results[7] = {7,1,3,2,4,5,6};
+    int race_results[6] = {1,2,3,4,5,6};
     SeasonStatus season_status_1 = SeasonAddRaceResult(season, race_results);
     assert(season_status_1 == SEASON_OK);
-    int race_results2[7] = {1,7,3,4,5,6,2};
-    season_status = SeasonAddRaceResult(season, race_results2);
+    int race_results2[6] = {1,2,3,4,5,6};
+    season_status = SeasonAddRaceResult( season, race_results2);
     assert(season_status == SEASON_OK);
-    printpointDriver(season);
-   // int number_of_teams=SeasonGetNumberOfTeams(season);
-    Driver d1=SeasonGetDriverByPosition(season, 7, &season_status);
-
+    printpointTeam(season);
+    int number_of_teams=SeasonGetNumberOfTeams(season);
+    Team team_from_position = SeasonGetTeamByPosition(season, 2, season_status);
+    print_the_position_team(team_from_position);
     /// / Team * array_team = SeasonGetTeamsStandings(season);
     //printPointArrayTeam(array_team, number_of_teams);
     //Driver d1=SeasonGetDriverByPosition(season,2,&season_status);
-    int x=DriverGetId(d1);
-    printf("the driver that his position in the seven  place : %x\n",x);
+   // int x=DriverGetId(d1);
+    //printf("the driver that his position in the second place : %x\n",x);
 
     //int DriverGetId(Driver driver);
     //Driver * temp_drive = Season_help_check (season)

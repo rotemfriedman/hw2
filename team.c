@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 struct team{
     char* name_team ;
     Driver first_driver;
@@ -19,6 +20,8 @@ Team TeamCreate(TeamStatus* status, char * name){
         *status = DRIVER_MEMORY_ERROR;
         return NULL;
     }
+    new_team->first_driver=NULL;
+    new_team->second_driver=NULL;
     new_team->name_team = malloc(strlen(name) + 1);
     if(new_team->name_team == NULL) {
         *status = DRIVER_MEMORY_ERROR;
@@ -27,8 +30,6 @@ Team TeamCreate(TeamStatus* status, char * name){
     }
     strcpy(new_team->name_team, name);
     *status = DRIVER_STATUS_OK;
-    new_team->first_driver=NULL;
-    new_team->second_driver=NULL;
     return new_team;
 
 }
@@ -108,4 +109,8 @@ Driver TeamGetDriver(Team team, DriverNumber driver_number){
             return team->second_driver;
     }
 
+}
+
+void print_the_position_team (Team team){
+    printf("the team is %s", team->name_team);
 }
