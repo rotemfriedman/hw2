@@ -337,6 +337,7 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
             {
             if(season->race_result[j]==id_index_min){
                 index_min=i;
+                points_min=points_in_index_i;
             }
                 else if(season->race_result[j]==id_i){
 
