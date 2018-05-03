@@ -92,6 +92,7 @@ static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status
     char* copy_season_info=malloc(sizeof(char)*length_of_season_info);
     if(copy_season_info == NULL) {
         *status = SEASON_MEMORY_ERROR;
+        return NULL;
     }
     strcpy(copy_season_info, season_info);                        //copy the const array-"season_info", to "my_season_info"
     return copy_season_info;
