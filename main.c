@@ -31,7 +31,7 @@ None\n\
     int race_results[6] = {1,2,3,4,5,6};
     SeasonStatus season_status_1 = SeasonAddRaceResult(season, race_results);
     assert(season_status_1 == SEASON_OK);
-    int race_results2[6] = {1,2,3,4,5,6};
+    int race_results2[6] = {6,2,3,4,5,1};
     season_status = SeasonAddRaceResult( season, race_results2);
     assert(season_status == SEASON_OK);
     printpointTeam(season);
