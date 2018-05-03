@@ -70,6 +70,9 @@ Team DriverGetTeam(Driver driver) {
 
 //the function DriverDestroy Get a driver and free the driver
 void DriverDestroy(Driver driver){
+    if(driver == NULL){
+        return;
+    }
     free(driver->driver_name);
     free(driver);
 }
