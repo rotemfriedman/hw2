@@ -74,7 +74,7 @@ void DriverDestroy(Driver driver){
 //Get a driver and return his ID. If we get input null we return null.
 int DriverGetId (Driver driver) {
     if (driver==NULL){
-        return (int)NULL;
+        return 0;
     }
         return driver->id;                  //return the id of the driver input
 }
