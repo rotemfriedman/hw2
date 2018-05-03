@@ -44,10 +44,12 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     if(new_season == NULL) {                     //free the season. return NULL
         *status = SEASON_MEMORY_ERROR;
         destroyMySeason(new_season);
+        return NULL;
     }
     char * my_season_info = copyFileSeasonCreate(season_info, status);
     if( *status == SEASON_MEMORY_ERROR ){          //there was a error memory. return NULL
         destroyMySeason(new_season);
+        return NULL;
     }
     char *token=strtok(my_season_info, "\n");
     int season_year=atoi(token);          //conveert char to int.
@@ -57,6 +59,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     my_season_info = copyFileSeasonCreate(season_info, status); //start again and skip the year
     if( *status == SEASON_MEMORY_ERROR ){          //there was a error memory. return NULL
         destroyMySeason(new_season);
+        return NULL;
     }
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
@@ -64,6 +67,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         free(my_season_info);
         free (new_season->array_team);
         destroyMySeason(new_season);
+        return NULL;
     }
     temp_team = new_season->array_team;
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
@@ -72,6 +76,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         free(my_season_info);
         destroyMyArray (new_season->array_team, new_season->array_drivers);
         destroyMySeason(new_season);    //this function return NULL
+    return NULL;
     }
     temp_driver=new_season->array_drivers;
     insertTheDataToSeason(new_season, my_season_info, temp_team, temp_driver);
