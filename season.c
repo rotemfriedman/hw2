@@ -79,6 +79,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
 }
 
 //copy the file season_info, to file my_season_info.
+
 static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status){
     int length_of_season_info=strlen(season_info)+1;       //get the length of the file - season_info
     char* copy_season_info=malloc(sizeof(char)*length_of_season_info);
@@ -179,12 +180,18 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     season->number_of_drivers=get_id-1;
 }
 
-
+//Get season and return number of drivers that participant in the season.
 int SeasonGetNumberOfDrivers(Season season){
+    if(season==NULL){
+        return 0;
+    }
     return season->number_of_drivers;
 }
-
+//Get season and return number of teams that participant in the season.
 int SeasonGetNumberOfTeams(Season season){
+    if(season==NULL){
+        return 0;
+    }
     return season->number_of_teams;
 }
 
@@ -192,7 +199,6 @@ int SeasonGetNumberOfTeams(Season season){
 // *every index in the team array and in the driver array
 // *the team array and the driver array
 // *the stract season
-
 void   SeasonDestroy(Season season){
     int number_of_teams=season->number_of_teams;
     int number_of_drivers=season->number_of_drivers;
@@ -202,7 +208,10 @@ void   SeasonDestroy(Season season){
 }
 
 Team* SeasonGetTeamsStandings(Season season){
-    TeamStatus team_status=TEAM_NULL_PTR;
+    if(season==NULL){
+        return NULL;
+    }
+    TeamStatus team_status;
     int size_array=season->number_of_teams;
     Team * new_array_teams=malloc(sizeof(*new_array_teams)*size_array);
     if (new_array_teams == NULL){
@@ -218,16 +227,18 @@ Team* SeasonGetTeamsStandings(Season season){
 
 }
 
-
+//the function  get a season and position and status.
+//return the team that in this position.
 Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus status){
-
+    if(season == NULL){
+        return NULL;
+    }
     Team * array_team = SeasonGetTeamsStandings(season);
     int number_of_teams=season->number_of_teams;
     if( position <=0 || position > number_of_teams) {    //the position is not legal
         status = BAD_SEASON_INFO;
         return NULL;
-    }
-    else {
+    }else{
         status = SEASON_OK;
         return array_team[position-1];
     }
@@ -377,8 +388,9 @@ Driver* SeasonGetDriversStandings(Season season){
     DriverStatus driver_status = DRIVER_STATUS_OK;
     int size_array=season->number_of_drivers;
     Driver *new_array_drivers=malloc(sizeof(*new_array_drivers)*size_array);
-    if(new_array_drivers==NULL)
+    if(new_array_drivers==NULL){
         return NULL;
+        }
     seasonCopyTheArrayDriver(season,new_array_drivers,size_array);
     seasonMinSortDriver(season,new_array_drivers,size_array,&driver_status);
     if(driver_status == INVALID_DRIVER){
@@ -389,6 +401,9 @@ Driver* SeasonGetDriversStandings(Season season){
 }
 
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status){
+    if(season==NULL){
+        return NULL;
+    }
     int size_array=season->number_of_drivers;
     Driver *new_array_drivers;
     new_array_drivers=SeasonGetDriversStandings(season);
@@ -418,10 +433,12 @@ static void idGetDriver(Season season)
     }
 }
 
-
+//Get a season, and array in length of the numbers of the drivers in the season
+//add race result to race_result in struct season.
 SeasonStatus SeasonAddRaceResult(Season season, int* results){
-    if(season==NULL||results==NULL)
+    if( season==NULL || results==NULL ) {
         return SEASON_NULL_PTR;
+    }
     season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);///// check the maloc and free if null!!!!
     for(int i=0; i<season->number_of_drivers; i++){
         season->race_result[i]=results[i];
