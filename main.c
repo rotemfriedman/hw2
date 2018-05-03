@@ -22,11 +22,11 @@ void DriverUnitTest(){
 	DriverSetTeam(Lewis, Mercedes);
 	assert(strcmp(DriverGetName(Lewis),"Lewis")==0);
 	assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
-	
-	
+
+
 	/*now lets try to create a season
 	all drivers/teams created above are not related to the season.*/
-	
+
 	SeasonStatus season_status;
 	char* season_info="\
 2018\n\
