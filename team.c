@@ -67,6 +67,9 @@ int TeamGetPoints(Team team, TeamStatus *status) {
 //this function destroy all the allocation that are under the struct team struct
 //we need to destroy the name_team, the drivers, and the struct team
 void TeamDestroy(Team team){
+    if( team == NULL ){
+        return;
+    }
     free(team->name_team);
     DriverDestroy(team->first_driver);
     DriverDestroy(team->second_driver);
