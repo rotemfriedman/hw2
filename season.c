@@ -12,7 +12,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
 static Season destroyMySeason(Season season);                               //function that destroy the season that we created in the SeasonCreate
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
 static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
-static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
+static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //SeasonGetDriversStandings help and SeasonGetTeamsStandings help
 //static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
@@ -122,7 +122,7 @@ static void destroyArrayByIndex (int team_index, int driver_index, Season season
     destroyMyArray(season->array_team, season->array_drivers);       //free the arrays of team and the array of driver
 }
 
-static Season destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season){
+static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season){
     int difference_team=temp_team-(season->array_team);
     int difference_driver=temp_driver-(season->array_drivers);
     destroyArrayByIndex (difference_team, difference_driver, season);
