@@ -23,7 +23,7 @@ static void  seasonMinSortTeam(Season season, Team *array_teams,int size_array, 
 static void seasonCopyTheArrayTeam(Season season, Team * array_team, int size_of_array);
 static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status);
 static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
-static void* seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status);
+static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status);
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
 static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int size_of_array,DriverStatus *driver_status);
 static void idGetDriver(Season season);
@@ -38,8 +38,8 @@ struct season {
 };
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
-    Team *temp_team;           //pointer that help us to insert the data to the Team's array
-    Driver *temp_driver;       //pointer that help us to insert the data to the Driver's araay
+    Team *temp_team = NULL;           //pointer that help us to insert the data to the Team's array
+    Driver *temp_driver=NULL;       //pointer that help us to insert the data to the Driver's araay
     Season new_season = malloc(sizeof(*new_season));   //create the new season
     if(new_season == NULL) {                     //free the season. return NULL
         *status = SEASON_MEMORY_ERROR;
@@ -366,12 +366,12 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
     return index_min;
 }
 
-static void* seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status){
+static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status){
     int length;
     for(length=size_array;length>1;length--) {
         int i_min = seasonFindTheMinDriver(season,array_drivers, length,driver_status);
         if(*driver_status == INVALID_DRIVER){
-            return NULL;
+            return;
         }
         seasonSwapDriver(&array_drivers[i_min],&array_drivers[length - 1]);
     }
