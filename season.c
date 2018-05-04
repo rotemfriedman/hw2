@@ -202,7 +202,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
     if(season->race_result==NULL) {
         seasonDestroyWithOutRaceResult(season);
-        return NULL;
+        return;
     }
 
 }
