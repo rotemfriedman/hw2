@@ -102,6 +102,9 @@ void DriverSetSeason(Driver driver, Season season){
 //get a driver, and a parameter of status. return the number of points of the driver.
 //if driver NULL return 0 and update status to INVALID_DRIVER
 int DriverGetPoints(Driver driver, DriverStatus* status){
+    if(status==NULL){
+        return 0;
+    }
     if(driver==NULL){
         *status= INVALID_DRIVER;
         return 0;
