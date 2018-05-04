@@ -13,7 +13,7 @@ static Season destroyMySeason(Season season);                               //fu
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
 static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
 static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
-static void seasonDestroywithoutraceresult(Season season);
+static void seasonDestroyWithOutRaceResult(Season season);
 
 //this function put in the array of drivers and the array of teams NULL
 static void putNullInTheTeamArray(Team * temp_team, int number_of_team);
@@ -201,13 +201,13 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     season->number_of_drivers=get_id-1;
     season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
     if(season->race_result==NULL) {
-        seasonDestroywithoutraceresult(season);
-        return; NULL;
+        seasonDestroyWithOutRaceResult(season);
+        return NULL;
     }
 
 }
 
-static void seasonDestroywithoutraceresult(Season season){
+static void seasonDestroyWithOutRaceResult(Season season){
     int number_of_teams=season->number_of_teams;
     destroyArrayByIndex (number_of_teams, number_of_teams*2, season ); //destroy by index the 2 arrays
     free(season);
@@ -248,6 +248,7 @@ int SeasonGetNumberOfTeams(Season season){
 void   SeasonDestroy(Season season){
     int number_of_teams=season->number_of_teams;
     destroyArrayByIndex (number_of_teams, number_of_teams*2, season ); //destroy by index the 2 arrays
+    free(season->race_result);
     free(season);
 }
 
