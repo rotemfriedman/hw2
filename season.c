@@ -53,6 +53,9 @@ struct season {
 //5)	Make a array if the names of the drivers
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
+    if(status==NULL){
+        return NULL;
+    }
     *status=SEASON_OK;
     Team *temp_team = NULL;                                             //pointer that help us to insert the data to the Team's array
     Driver *temp_driver=NULL;                                           //pointer that help us to insert the data to the Driver's araay
