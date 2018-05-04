@@ -15,6 +15,9 @@ static void destroyArrayByIndex (int team_index, int driver_index, Season season
 static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
 static void seasonDestroyWithOutRaceResult(Season season);
 
+//check if the team_status return a "TEAM_NULL_PTR"
+static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team);
+
 //this function put in the array of drivers and the array of teams NULL
 static void putNullInTheTeamArray(Team * temp_team, int number_of_team);
 static void putNullInTheDriverArray(Driver* temp_driver, int number_of_driver);
@@ -185,6 +188,10 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
             DriverSetTeam(*temp_driver, *temp_team);
             DriverSetSeason(*temp_driver, season);
             status_team = TeamAddDriver(*temp_team, *temp_driver);
+            checkIfTeamStatusIsNull(season, temp_team, temp_driver, &status_team);
+            if(status_team==TEAM_NULL_PTR){
+                return;
+            }
             get_id++;                                       //get_id +1 to the next driver
             temp_driver++;
             token=strtok(NULL, "\n");                       //continue to the driver
@@ -202,6 +209,10 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         DriverSetTeam(*temp_driver, *temp_team);
         DriverSetSeason(*temp_driver, season);
         status_team = TeamAddDriver(*temp_team, *temp_driver);
+        checkIfTeamStatusIsNull(season, temp_team, temp_driver, &status_team);
+        if(status_team==TEAM_NULL_PTR){
+            return;
+        }
         get_id++;                                           //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                           //continue to the next team
@@ -217,6 +228,13 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
 
 }
 
+static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team){
+    if(*status_team == TEAM_NULL_PTR){                  //it's not good because  it's mean *temp_team or *temp_driver are NULL
+        destroyFinishInCreateSeason(temp_team, temp_driver, season);
+        return;
+        }
+
+}
 static void seasonDestroyWithOutRaceResult(Season season){
     int number_of_teams=season->number_of_teams;
     destroyArrayByIndex (number_of_teams, number_of_teams*2, season ); //destroy by index the 2 arrays

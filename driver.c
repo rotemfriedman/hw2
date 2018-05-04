@@ -35,6 +35,9 @@ const char* DriverGetName(Driver driver){
 //Get the driver name, id, and status.
 //The func’ create new driver, and return the new driver from type driver.
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
+    if(status==NULL){
+        return NULL;
+    }
     *status=DRIVER_STATUS_OK;
     Driver new_driver = malloc(sizeof(*new_driver));
     if(new_driver == NULL) {
