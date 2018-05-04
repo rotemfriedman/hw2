@@ -26,7 +26,7 @@ void DriverSetTeam(Driver driver, Team team){
 //get a driver, and return ptr to the name of the driver.
 //If the func’ get NULL return NULL.
 const char* DriverGetName(Driver driver){
-    if (driver==NULL) {
+    if (driver==NULL) {                      //if driver NULL finish the program
         return NULL;
     }
         return driver->driver_name;
@@ -62,18 +62,17 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
     return new_driver;
 }
 
-//Get a driver , and return ptr to his team. If the function get NULL, return NULL*//
+//Get a driver , and return ptr to his team. If the function get NULL, return NULL
 Team DriverGetTeam(Driver driver) {
     if (driver == NULL) {
         return NULL;
-    } else {
-        return driver->driver_team;
     }
+        return driver->driver_team;
 }
 
 //the function DriverDestroy Get a driver and free the driver
 void DriverDestroy(Driver driver){
-    if(driver == NULL){
+    if(driver == NULL){               //if driver NULL finish the func'
         return;
     }
     free(driver->driver_name);
@@ -93,12 +92,13 @@ int DriverGetId (Driver driver) {
 //1)	Update the season of the driver, based on the season that we get in the input.
 //2)	 The Points of the driver will be zero 0.
 void DriverSetSeason(Driver driver, Season season){
-    if(driver==NULL || season==NULL){                  //if driver or season null finish the function
+    if( driver==NULL || season==NULL ){                  //if driver or season null finish the function
         return;
     }
     driver->driver_season=season;
     driver->points=0;
 }
+
 //get a driver, and a parameter of status. return the number of points of the driver.
 //if driver NULL return 0 and update status to INVALID_DRIVER
 int DriverGetPoints(Driver driver, DriverStatus* status){
@@ -117,7 +117,7 @@ DriverStatus DriverAddRaceResult(Driver driver, int position){
     if( driver == NULL ) {
         return INVALID_DRIVER;
     }
-    if(position<=0) {
+    if(position<=0) {                          //if position not legal return INVALID_POSITION
         return INVALID_POSITION;
     }
     if(driver-> driver_season==NULL) {
