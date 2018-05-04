@@ -19,15 +19,14 @@ int main(){
 	DriverStatus driver_status;
 	TeamStatus team_status;
 
-//	Driver Lewis = DriverCreate(&driver_status, "Lewis", 44);
-//		Team Mercedes = TeamCreate(&team_status, "Mercedes");
-//		DriverSetTeam(Lewis, Mercedes);
-//		assert(strcmp(DriverGetName(Lewis),"Lewis")==0);
-//		assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
+	Driver Lewis = DriverCreate(&driver_status, "Lewis", 44);
+	Team Mercedes = TeamCreate(&team_status, "Mercedes");
+	DriverSetTeam(Lewis, Mercedes);
+	assert(strcmp(DriverGetName(Lewis),"Lewis")==0);
+	assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
 
-
-//	DriverDestroy(Lewis);
-//	TeamDestroy(Mercedes);
+	DriverDestroy(Lewis);
+	TeamDestroy(Mercedes);
 
 	SeasonStatus season_status;
 	char* season_info="\
@@ -43,24 +42,26 @@ Daniel\n\
 Max  Verstappen\n\
 McLaren\n\
 Fernando Alonso\n\
-None\n\
-teammmm\n\
-driver1\n\
-driver2\n\
-Nonee\n\
-None\n\
-shaked333\n\
+shak\n\
 ";
 	Season season = SeasonCreate(&season_status,season_info);
-	int race_results[7] = {7,1,3,2,4,5,6};
-	SeasonAddRaceResult(season, race_results);
-    Driver driver= SeasonGetDriverByPosition(season,3, &season_status);
-    assert(strcmp(DriverGetName(driver),"Lewis Hamilton")==0);
 
+	int number_of_driver=SeasonGetNumberOfDrivers(season);
+	int number_of_team=SeasonGetNumberOfTeams(season);
+	printf("numDr=%d, numTe=%d\n", number_of_driver, number_of_team);
 
-    //int number_of_driver=SeasonGetNumberOfDrivers(season);
-		//int number_of_team=SeasonGetNumberOfTeams(season);
-		//printf("numDr=%d, numTe=%d", number_of_driver, number_of_team);
+	int race_results[8] = {1,2,3,4,5,6,7,8};
+	season_status = SeasonAddRaceResult(season, race_results);
+	int race_results1[8] = {8,7,6,5,4,3,2,1};
+	season_status = SeasonAddRaceResult(season, race_results1);
+
+	assert(season_status==SEASON_OK);
+
+	printpointTeam(season);
+
+	Team team_in = SeasonGetTeamByPosition(NULL, 0 , &season_status);
+	const char * name_team = TeamGetName(team_in);
+	printf("the team is = %s\n", name_team);
 	SeasonDestroy(season);
 
 	return 0;

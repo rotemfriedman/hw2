@@ -21,7 +21,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info);
 void   SeasonDestroy(Season season);
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status);
 Driver* SeasonGetDriversStandings(Season season);
-Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus status);
+Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus* status);
 Team* SeasonGetTeamsStandings(Season season);
 int SeasonGetNumberOfDrivers(Season season);
 int SeasonGetNumberOfTeams(Season season);
