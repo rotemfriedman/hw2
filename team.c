@@ -22,13 +22,15 @@ Team TeamCreate(TeamStatus* status, char * name){
     }
     new_team->first_driver=NULL;
     new_team->second_driver=NULL;
-    new_team->name_team = malloc(strlen(name) + 1);       //allocate a place for the name team
-    if(new_team->name_team == NULL) {
+    char * local_team_name= malloc(strlen(name) + 1);       //allocate a place for the name team
+    if( local_team_name== NULL) {
         *status = DRIVER_MEMORY_ERROR;
         free(new_team);
         return NULL;
     }
-    strcpy(new_team->name_team, name);         //copy the name of the team, to the field new_team->name_team
+
+    strcpy(local_team_name, name);         //copy the name of the team, to the field new_team->name_team
+    new_team->name_team=local_team_name;
     *status = DRIVER_STATUS_OK;
     return new_team;
 
@@ -71,8 +73,6 @@ void TeamDestroy(Team team){
         return;
     }
     free(team->name_team);
-   // DriverDestroy(team->first_driver);
-    //DriverDestroy(team->second_driver);
     free(team);
 }
 

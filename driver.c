@@ -46,14 +46,15 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
         free(new_driver);
         return NULL;
     }
-    new_driver->driver_name = malloc(strlen(driver_name) + 1);
-    if(new_driver->driver_name == NULL) {
+    char * local_driver_name=malloc(strlen(driver_name) + 1);
+    if(local_driver_name == NULL) {
         *status = DRIVER_MEMORY_ERROR;
         free(new_driver);
         return NULL;
     }
     new_driver->id = driverId;                           //create the new driver with the input of new driver
-    strcpy(new_driver->driver_name, driver_name);
+    strcpy(local_driver_name, driver_name);
+    new_driver->driver_name=local_driver_name;
     *status = DRIVER_STATUS_OK;
     new_driver->points=0;                                //initilize points to 0
     new_driver->driver_team=NULL;                        //initilize driver_team to null

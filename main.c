@@ -15,32 +15,36 @@
 
 int main(){
 	DriverStatus driver_status=DRIVER_STATUS_OK;
-	SeasonStatus season_status=SEASON_OK;
-	//TeamStatus team_status;
+	TeamStatus team_status=TEAM_STATUS_OK;
 	Driver Lewis = DriverCreate(&driver_status, "Lewis", 44);
-	DriverDestroy(Lewis);
-	//Team Mercedes = TeamCreate(&team_status, "Mercedes");
-	//DriverSetTeam(Lewis, Mercedes);
-	char* season_info="\
-2018\n\
-Ferrari\n\
-Sebastian Vettel\n\
-Kimi Raikonen\n\
-Mercedes\n\
-Lewis Hamilton\n\
-Valtteri Bottas\n\
-RedBull Racing\n\
-Daniel\n\
-Max  Verstappen\n\
-McLaren\n\
-Fernando Alonso\n\
-None\n\
-";
-	Season season = SeasonCreate(&season_status,season_info);
-	int race_results[7] = {7, 1,3,2,4,5,6};
+	Driver shaked = DriverCreate(&driver_status, "shaked", 41);
+	Driver rotem = DriverCreate(&driver_status, "rotem", 42);
 
-	SeasonAddRaceResult(season, race_results);
-	DriverSetSeason(Lewis,season);
-	SeasonDestroy(season);
+
+	Team skoda =TeamCreate(&team_status, "skoda");
+
+	TeamStatus status1= TeamAddDriver(skoda, shaked);
+	TeamStatus status2=TeamAddDriver(skoda, NULL);
+	TeamStatus status3=TeamAddDriver(skoda, rotem);
+	TeamStatus status4=TeamAddDriver(skoda, Lewis);
+
+
+	const char* string_name_skoda1=TeamGetName(skoda);
+	const char* string_name_skoda2=TeamGetName(NULL);
+
+	Driver d1 = TeamGetDriver(NULL, FIRST_DRIVER);
+
+	int points =  TeamGetPoints(NULL, &team_status);
+	printf("point=%d\n", points);
+
+	DriverDestroy(Lewis);
+	DriverDestroy(shaked);
+	DriverDestroy(rotem);
+
+	TeamDestroy(skoda);
+
+	
+
+
 	return 0;
 }
