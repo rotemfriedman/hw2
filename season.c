@@ -36,7 +36,6 @@ static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int siz
 static void idGetDriver(Season season);
 //static void destroyDriverByIndex (Driver *array_drivers, Season season );
 
-
 struct season {
     int year;
     int number_of_teams;
@@ -284,19 +283,21 @@ Team* SeasonGetTeamsStandings(Season season){
 
 //the function  get a season and position and status.
 //return the team that in this position.
-Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus status){
+Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus * status){
     if(season == NULL){
+        *status=SEASON_NULL_PTR;
         return NULL;
     }
+    if( position <=0 || position > (season->number_of_teams)) {    //the position is not legal
+        *status = BAD_SEASON_INFO;
+        return NULL;
+        }
     Team * array_team = SeasonGetTeamsStandings(season);
     int number_of_teams=season->number_of_teams;
-    if( position <=0 || position > number_of_teams) {    //the position is not legal
-        status = BAD_SEASON_INFO;
-        return NULL;
-    }else{
-        status = SEASON_OK;
-        return array_team[position-1];
-    }
+        *status = SEASON_OK;
+        Team result = array_team[position-1];
+        free (array_team);
+        return result;
 }
 
 //the function copy the season->array_team to the input
@@ -321,10 +322,10 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
             return 0;
         }
         if(points_min == points_in_index_i){
-            Driver driver1_for_index_min = TeamGetDriver(season->array_team[index_min],FIRST_DRIVER);
-            Driver driver2_for_index_min  = TeamGetDriver(season->array_team[index_min],SECOND_DRIVER);
-            Driver driver3_for_index_i  = TeamGetDriver(season->array_team[i],FIRST_DRIVER);
-            Driver driver4_for_index_i  = TeamGetDriver(season->array_team[i],SECOND_DRIVER);
+            Driver driver1_for_index_min = TeamGetDriver(array_team[index_min],FIRST_DRIVER);
+            Driver driver2_for_index_min  = TeamGetDriver(array_team[index_min],SECOND_DRIVER);
+            Driver driver3_for_index_i  = TeamGetDriver(array_team[i],FIRST_DRIVER);
+            Driver driver4_for_index_i  = TeamGetDriver(array_team[i],SECOND_DRIVER);
             int id1_index_min = DriverGetId(driver1_for_index_min);
             int id2_index_min = DriverGetId(driver2_for_index_min);
             int id3_index_i = DriverGetId(driver3_for_index_i);
@@ -347,8 +348,7 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
                     break;
                 }
             }
-        }
-            if(points_min > points_in_index_i){
+        } else if(points_min > points_in_index_i){
                 points_min=points_in_index_i;
                 index_min=i;
         }
@@ -530,21 +530,14 @@ void printpointTeam(Season season)
     TeamStatus status;
     for(int i=0;i<season->number_of_teams;i++) {
         int x = TeamGetPoints (season->array_team[i], &status);
-        printf("the point of the driver number %d his points is %d\n", i+1,x);
+        printf("the point of the team number %d his points is %d\n", i+1,x);
     }
 }
 
 void printPointArrayTeam(Team* array_team, int number_of_teams){
     for(int i=0; i<number_of_teams; i++){
        const char* name_team= TeamGetName(array_team[i]);
-        printf("the team in the place %d, is %s\n", i+1, name_team);
+        printf("the team number %d, is %s\n", i+1, name_team);
     }
 }
 
-//static void destroyDriverByIndex (Driver *array_drivers, Season season ){
-  //  int index;
-    //for (index = 0; index <season->number_of_drivers ; index++) {
-      //  DriverDestroy(array_drivers[index]);
-    //}
-//free(array_drivers);
-//}
