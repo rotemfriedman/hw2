@@ -300,6 +300,9 @@ Team* SeasonGetTeamsStandings(Season season){
 //the function  get a season and position and status.
 //return the team that in this position.
 Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus * status){
+   if(status == NULL){
+       return NULL;
+   }
     if(season == NULL){
         *status=SEASON_NULL_PTR;
         return NULL;
@@ -457,6 +460,9 @@ static void seasonSwapDriver(Driver *drivers1,Driver *drivers2) {
 
 //Get a season and return array of ptr sort according to there points
 Driver* SeasonGetDriversStandings(Season season){
+    if(season == NULL){
+        return NULL;
+    }
     DriverStatus driver_status = DRIVER_STATUS_OK;
     int size_array=season->number_of_drivers;
     Driver *new_array_drivers=malloc(sizeof(*new_array_drivers)*size_array);
@@ -475,7 +481,9 @@ Driver* SeasonGetDriversStandings(Season season){
 //get season position and status.
 //return the driver that we get input about the position.
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status){
-    *status=SEASON_OK;
+    if(status==NULL){
+        return NULL;
+    }
     if(season==NULL){
         return NULL;
     }

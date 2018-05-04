@@ -35,30 +35,37 @@ const char* DriverGetName(Driver driver){
 //Get the driver name, id, and status.
 //The func’ create new driver, and return the new driver from type driver.
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
-    if(status==NULL){
-        return NULL;
+    if(status!=NULL){
+        *status=DRIVER_STATUS_OK;
     }
-    *status=DRIVER_STATUS_OK;
     Driver new_driver = malloc(sizeof(*new_driver));
     if(new_driver == NULL) {
-        *status = DRIVER_MEMORY_ERROR;
+        if(status!=NULL){
+            *status = DRIVER_MEMORY_ERROR;
+            }
         return NULL;
     }
     if(driver_name==NULL || driverId<1){
+        if(status!=NULL){
         *status=INVALID_DRIVER;
+        }
         free(new_driver);
         return NULL;
     }
     char * local_driver_name=malloc(strlen(driver_name) + 1);        // allocate a local driver name
     if(local_driver_name == NULL) {
+        if(status!=NULL){
         *status = DRIVER_MEMORY_ERROR;
+        }
         free(new_driver);
         return NULL;
     }
     new_driver->id = driverId;                           //create the new driver with the input of new driver
     strcpy(local_driver_name, driver_name);
     new_driver->driver_name=local_driver_name;
+    if(status!=NULL){
     *status = DRIVER_STATUS_OK;
+    }
     new_driver->points=0;                                //initilize points to 0
     new_driver->driver_team=NULL;                        //initilize driver_team to null
     new_driver->driver_season=NULL;                      //initilize driver_season to null
@@ -105,14 +112,15 @@ void DriverSetSeason(Driver driver, Season season){
 //get a driver, and a parameter of status. return the number of points of the driver.
 //if driver NULL return 0 and update status to INVALID_DRIVER
 int DriverGetPoints(Driver driver, DriverStatus* status){
-    if(status==NULL){
-        return 0;
-    }
     if(driver==NULL){
+        if(status!=NULL){
         *status= INVALID_DRIVER;
+        }
         return 0;
     }else {
+        if(status!=NULL){
         *status=DRIVER_STATUS_OK;
+        }
         return driver->points;
     }
 }
