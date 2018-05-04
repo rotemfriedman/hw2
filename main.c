@@ -21,7 +21,7 @@ void DriverUnitTest(){
 	Team Mercedes = TeamCreate(&team_status, "Mercedes");
 	DriverSetTeam(Lewis, Mercedes);
 	assert(strcmp(DriverGetName(Lewis),"Lewis")==0);
-	assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
+    assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
 
 
 	/*now lets try to create a season
@@ -44,9 +44,9 @@ Fernando Alonso\n\
 None\n\
 ";
 	Season season = SeasonCreate(&season_status,season_info);
-	int race_results[7] = {7, 1,3,2,4,5,6};
+    int race_results[7] = {7, 1,3,2,4,5,6};
 
-	SeasonAddRaceResult(season, race_results);
+    SeasonAddRaceResult(season, race_results);
 
 	SeasonDestroy(season);
 	printf("Finished Testing Driver!\n");
