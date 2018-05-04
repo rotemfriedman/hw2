@@ -22,7 +22,7 @@ Team TeamCreate(TeamStatus* status, char * name){
     }
     new_team->first_driver=NULL;
     new_team->second_driver=NULL;
-    char * local_team_name= malloc(strlen(name) + 1);       //allocate a place for the name team
+    char * local_team_name= malloc(strlen(name) + 1);       //allocate a place for the name team. a local team name
     if( local_team_name== NULL) {
         *status = TEAM_MEMORY_ERROR;                      //update the status of the team
         free(new_team);

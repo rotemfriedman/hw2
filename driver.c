@@ -46,7 +46,7 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
         free(new_driver);
         return NULL;
     }
-    char * local_driver_name=malloc(strlen(driver_name) + 1);
+    char * local_driver_name=malloc(strlen(driver_name) + 1);        // allocate a local driver name
     if(local_driver_name == NULL) {
         *status = DRIVER_MEMORY_ERROR;
         free(new_driver);
