@@ -54,11 +54,7 @@ struct season {
 //3)	Make a array of the names of the team
 //4)	Insert the numbers of drivers
 //5)	Make a array if the names of the drivers
-
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
-    if(status==NULL){
-        return NULL;
-    }
     *status=SEASON_OK;
     Team *temp_team = NULL;                                             //pointer that help us to insert the data to the Team's array
     Driver *temp_driver=NULL;                                           //pointer that help us to insert the data to the Driver's araay
@@ -104,7 +100,6 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     temp_driver=new_season->array_drivers;
     putNullInTheDriverArray(temp_driver, total_driver_number);
     insertTheDataToSeason(new_season, new_season_info, temp_team, temp_driver);
-
     free(new_season_info);
     return new_season;
 }
