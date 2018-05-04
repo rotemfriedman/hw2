@@ -58,8 +58,12 @@ void SeasonUnitTest(){
 
 int main(){
 	printf("starting to run the unit tests! change\n");
-	DriverUnitTest();
-	TeamUnitTest();
-	SeasonUnitTest();
+//	DriverUnitTest();
+//	TeamUnitTest();
+//	SeasonUnitTest();
+
+	DriverStatus driver_status;
+	Driver Lewis = DriverCreate(&driver_status, "Lewis", 44);
+
 	return 0;
 }
