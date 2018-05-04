@@ -20,12 +20,26 @@ int main(){
 //	TeamUnitTest();
 //	SeasonUnitTest();
 
-	DriverStatus driver_status;
-	Driver Lewis1 = DriverCreate(&driver_status, "Lewis", 44);
-	Team team;
-	TeamStatus status_team;
-	team=TeamCreate(&status_team , "skoda");
-	DriverDestroy(Lewis1);
-	TeamDestroy(team);
+	//DriverStatus driver_status;
+
+	SeasonStatus season_status;
+	char* season_info="\
+2018\n\
+Ferrari\n\
+Sebastian Vettel\n\
+Kimi Raikonen\n\
+Mercedes\n\
+Lewis Hamilton\n\
+Valtteri Bottas\n\
+RedBull Racing\n\
+Daniel\n\
+Max  Verstappen\n\
+McLaren\n\
+Fernando Alonso\n\
+None\n\
+";
+	Season season = SeasonCreate(&season_status,season_info);
+	SeasonDestroy(season);
+	printf("Finished Testing Driver!\n");
 	return 0;
 }
