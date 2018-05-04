@@ -15,33 +15,37 @@ struct team{
 //*Get the name of the team, and pointer of status, from type TeamStatus* .Put in status value- memory_error/status ok*//
 //*return a new team from a type team(that we create) and null if the team is not created.*//
 Team TeamCreate(TeamStatus* status, char * name){
-    if(status==NULL ) {
-        return NULL;
-    }
     if(name==NULL){
-       *status=TEAM_NULL_PTR;
+        if(status!=NULL ) {
+            *status = TEAM_NULL_PTR;
+        }
         return NULL;
     }
     Team new_team = malloc(sizeof(*new_team));
     if(new_team == NULL) {
-        *status = TEAM_MEMORY_ERROR;
-        return NULL;
+        if(status!=NULL ) {
+            *status = TEAM_MEMORY_ERROR;
+        }
+            return NULL;
     }
 
     new_team->first_driver=NULL;
     new_team->second_driver=NULL;
     char * local_team_name= malloc(strlen(name) + 1);       //allocate a place for the name team. a local team name
     if( local_team_name== NULL) {
-        *status = TEAM_MEMORY_ERROR;                      //update the status of the team
+        if(status!=NULL ) {
+            *status = TEAM_MEMORY_ERROR;                      //update the status of the team
+        }
         free(new_team);
         return NULL;
     }
 
     strcpy(local_team_name, name);         //copy the name of the team, to the field new_team->name_team
     new_team->name_team=local_team_name;
-    *status = TEAM_STATUS_OK;
+    if(status!=NULL ) {
+        *status = TEAM_STATUS_OK;
+    }
     return new_team;
-
 }
 
 //*Get team. If the input null return null.
@@ -60,7 +64,9 @@ int TeamGetPoints(Team team, TeamStatus *status) {
     int total_points = 0;
     DriverStatus status_driver=DRIVER_STATUS_OK;
     if (team == NULL){
-        *status = TEAM_NULL_PTR;
+        if(status!=NULL ) {
+            *status = TEAM_NULL_PTR;
+        }
         return total_points;                             //total_points will be 0
     } else {
         if (team->first_driver != NULL){
@@ -70,7 +76,9 @@ int TeamGetPoints(Team team, TeamStatus *status) {
             total_points+=DriverGetPoints(team->second_driver,&status_driver);
         }
     }
-    *status = TEAM_STATUS_OK;
+    if(status!=NULL ) {
+        *status = TEAM_STATUS_OK;
+    }
     return total_points;
 }
 
