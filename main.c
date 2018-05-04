@@ -19,15 +19,15 @@ int main(){
 	DriverStatus driver_status;
 	TeamStatus team_status;
 
-	Driver Lewis = DriverCreate(&driver_status, "Lewis", 44);
-		Team Mercedes = TeamCreate(&team_status, "Mercedes");
-		DriverSetTeam(Lewis, Mercedes);
-		assert(strcmp(DriverGetName(Lewis),"Lewis")==0);
-		assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
+//	Driver Lewis = DriverCreate(&driver_status, "Lewis", 44);
+//		Team Mercedes = TeamCreate(&team_status, "Mercedes");
+//		DriverSetTeam(Lewis, Mercedes);
+//		assert(strcmp(DriverGetName(Lewis),"Lewis")==0);
+//		assert(strcmp(TeamGetName(DriverGetTeam(Lewis)),"Mercedes")==0);
 
 
-	DriverDestroy(Lewis);
-	TeamDestroy(Mercedes);
+//	DriverDestroy(Lewis);
+//	TeamDestroy(Mercedes);
 
 	SeasonStatus season_status;
 	char* season_info="\
@@ -53,12 +53,14 @@ shaked333\n\
 ";
 	Season season = SeasonCreate(&season_status,season_info);
 	int race_results[7] = {7,1,3,2,4,5,6};
-
 	SeasonAddRaceResult(season, race_results);
+    Driver driver= SeasonGetDriverByPosition(season,3, &season_status);
+    assert(strcmp(DriverGetName(driver),"Lewis Hamilton")==0);
 
-		int number_of_driver=SeasonGetNumberOfDrivers(season);
-		int number_of_team=SeasonGetNumberOfTeams(season);
-		printf("numDr=%d, numTe=%d", number_of_driver, number_of_team);
+
+    //int number_of_driver=SeasonGetNumberOfDrivers(season);
+		//int number_of_team=SeasonGetNumberOfTeams(season);
+		//printf("numDr=%d, numTe=%d", number_of_driver, number_of_team);
 	SeasonDestroy(season);
 
 	return 0;

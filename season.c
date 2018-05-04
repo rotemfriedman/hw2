@@ -34,6 +34,7 @@ static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_arr
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
 static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int size_of_array,DriverStatus *driver_status);
 static void idGetDriver(Season season);
+//static void destroyDriverByIndex (Driver *array_drivers, Season season );
 
 
 struct season {
@@ -134,6 +135,7 @@ static void destroyMyArray (Team *team, Driver *driver){
     free (team);
     free (driver);
 }
+
 
 static void destroyArrayByIndex (int team_index, int driver_index, Season season ){
     int index;
@@ -469,7 +471,9 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
         return NULL;
     }else{
         *status = SEASON_OK;
-        return new_array_drivers[position-1];
+        Driver result=new_array_drivers[position-1];
+        free(new_array_drivers);
+        return result;
 
     }
 }
@@ -537,3 +541,10 @@ void printPointArrayTeam(Team* array_team, int number_of_teams){
     }
 }
 
+//static void destroyDriverByIndex (Driver *array_drivers, Season season ){
+  //  int index;
+    //for (index = 0; index <season->number_of_drivers ; index++) {
+      //  DriverDestroy(array_drivers[index]);
+    //}
+//free(array_drivers);
+//}
