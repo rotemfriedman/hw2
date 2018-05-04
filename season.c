@@ -46,6 +46,7 @@ struct season {
 };
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
+    *status=SEASON_OK;
     Team *temp_team = NULL;           //pointer that help us to insert the data to the Team's array
     Driver *temp_driver=NULL;       //pointer that help us to insert the data to the Driver's araay
     Season new_season = malloc(sizeof(*new_season));   //create the new season
