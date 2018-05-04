@@ -257,7 +257,7 @@ Team* SeasonGetTeamsStandings(Season season){
     if(season==NULL){
         return NULL;
     }
-    TeamStatus team_status;
+    TeamStatus team_status=TEAM_STATUS_OK;
     int size_array=season->number_of_teams;
     Team * new_array_teams=malloc(sizeof(*new_array_teams)*size_array);
     if (new_array_teams == NULL){
@@ -447,6 +447,7 @@ Driver* SeasonGetDriversStandings(Season season){
 }
 
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status){
+    *status=SEASON_OK;
     if(season==NULL){
         return NULL;
     }

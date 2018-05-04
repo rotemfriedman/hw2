@@ -35,6 +35,7 @@ const char* DriverGetName(Driver driver){
 //Get the driver name, id, and status.
 //The func’ create new driver, and return the new driver from type driver.
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
+    *status=DRIVER_STATUS_OK;
     if(driver_name==NULL || driverId<1){
         *status=INVALID_DRIVER;
         return NULL;
@@ -90,7 +91,7 @@ int DriverGetId (Driver driver) {
 //1)	Update the season of the driver, based on the season that we get in the input.
 //2)	 The Points of the driver will be zero 0.
 void DriverSetSeason(Driver driver, Season season){
-    if(driver==NULL || season==NULL){                  //if driver or season null finish the function
+    if(driver == NULL || season == NULL){                  //if driver or season null finish the function
         return;
     }
     driver->driver_season=season;
