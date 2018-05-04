@@ -71,8 +71,8 @@ void TeamDestroy(Team team){
         return;
     }
     free(team->name_team);
-    DriverDestroy(team->first_driver);
-    DriverDestroy(team->second_driver);
+   // DriverDestroy(team->first_driver);
+    //DriverDestroy(team->second_driver);
     free(team);
 }
 

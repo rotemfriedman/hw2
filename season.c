@@ -13,6 +13,12 @@ static Season destroyMySeason(Season season);                               //fu
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
 static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
 static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
+
+//this function put in the array of drivers and the array of teams NULL
+static void putNullInTheTeamArray(Team * temp_team, int number_of_team);
+static void putNullInTheDriverArray(Driver* temp_driver, int number_of_driver);
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //SeasonGetDriversStandings help and SeasonGetTeamsStandings help
 //static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
@@ -27,6 +33,7 @@ static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_arr
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
 static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int size_of_array,DriverStatus *driver_status);
 static void idGetDriver(Season season);
+
 
 struct season {
     int year;
@@ -56,7 +63,8 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     new_season->year=season_year;      //insert the year to the season
     int team_number=(rowsNumberInSeasonInfo(token))/3;              //calculate the team number and the driver number with help of the rows number of the file.
     int total_driver_number=team_number*2;     ////the number of drivers that we have in the season, including NULL
-    my_season_info = copyFileSeasonCreate(season_info, status); //start again and skip the year
+    free (my_season_info);
+    char * new_season_info = copyFileSeasonCreate(season_info, status); //start again and skip the year
     if( *status == SEASON_MEMORY_ERROR ){          //there was a error memory. return NULL
         destroyMySeason(new_season);
         return NULL;
@@ -64,24 +72,25 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
         *status = SEASON_MEMORY_ERROR;
-        free(my_season_info);
-        free (new_season->array_team);
+        free(new_season_info);
         destroyMySeason(new_season);
         return NULL;
     }
     temp_team = new_season->array_team;
+    putNullInTheTeamArray(temp_team, team_number);
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
     if((new_season->array_drivers) == NULL) {
         *status = SEASON_MEMORY_ERROR;
-        free(my_season_info);
-        destroyMyArray (new_season->array_team, new_season->array_drivers);
+        free(new_season_info);
+        free(new_season->array_team);
         destroyMySeason(new_season);    //this function return NULL
     return NULL;
     }
     temp_driver=new_season->array_drivers;
-    insertTheDataToSeason(new_season, my_season_info, temp_team, temp_driver);
+    putNullInTheDriverArray(temp_driver, total_driver_number);
+    insertTheDataToSeason(new_season, new_season_info, temp_team, temp_driver);
 
-    free(my_season_info);
+    free(new_season_info);
     return new_season;
 }
 
@@ -148,7 +157,6 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     {
         *temp_team=TeamCreate(&status_team,token);
         if (status_team == TEAM_MEMORY_ERROR) {         //there was a memory error in the func' TeamCreate
-            free(season_info);
             destroyFinishInCreateSeason(temp_team, temp_driver, season);
             return;
         }
@@ -160,7 +168,6 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         else {
             *temp_driver=DriverCreate(&status_driver,token, get_id);
             if (status_driver == DRIVER_MEMORY_ERROR){         //there was a memory error in the func' DriverCreate
-                free(season_info);
                 destroyFinishInCreateSeason(temp_team, temp_driver, season);
                 return;
             }
@@ -178,7 +185,6 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);
         if (status_driver == DRIVER_MEMORY_ERROR){           //there was a memory error in the func' DriverCreate
-            free(season_info);
             destroyFinishInCreateSeason(temp_team, temp_driver, season);
             return;
         }
@@ -192,6 +198,18 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     }
     season->number_of_teams=team_number;
     season->number_of_drivers=get_id-1;
+}
+
+static void putNullInTheTeamArray(Team * temp_team, int number_of_team){
+    for(int i=0; i<number_of_team; i++){
+        temp_team[i]=NULL;
+    }
+}
+
+static void putNullInTheDriverArray(Driver* temp_driver, int number_of_driver){
+    for(int i=0; i<number_of_driver; i++){
+        temp_driver[i]=NULL;
+    }
 }
 
 //Get season and return number of drivers that participant in the season.
@@ -215,9 +233,7 @@ int SeasonGetNumberOfTeams(Season season){
 // *the stract season
 void   SeasonDestroy(Season season){
     int number_of_teams=season->number_of_teams;
-    int number_of_drivers=season->number_of_drivers;
-    destroyArrayByIndex (number_of_teams, number_of_drivers, season ); //destroy by index the 2 arrays
-    destroyMyArray (season->array_team, season->array_drivers);          //destroy the 2 arrays
+    destroyArrayByIndex (number_of_teams, number_of_teams*2, season ); //destroy by index the 2 arrays
     free(season);
 }
 
