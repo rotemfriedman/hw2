@@ -44,6 +44,13 @@ struct season {
     Driver *array_drivers;
     int * race_result;
 };
+//Get *status, and a pointer to char – season_info.
+//The job if the func’ is to:
+//1)	Insert a year
+//2)	Insert the numbers of team
+//3)	Make a array of the names of the team
+//4)	Insert the numbers of drivers
+//5)	Make a array if the names of the drivers
 
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
     *status=SEASON_OK;
@@ -297,7 +304,7 @@ static void seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_
     }
 }
 
-//
+//the function return the index_min between the points of all team in array team.
 static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status){
     int i,j, index_min=0;
     int points_min=TeamGetPoints(array_team[0], team_status);
@@ -348,6 +355,7 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
     return index_min;
 }
 
+//the function sort all the teams in array team according to there points.
 static void seasonMinSortTeam(Season season, Team *array_teams,int size_array, TeamStatus * team_status){
     int length;
     for(length=size_array;length>1;length--) {
@@ -359,21 +367,21 @@ static void seasonMinSortTeam(Season season, Team *array_teams,int size_array, T
     }
 
 }
-
+//swap function
 static void seasonSwapTeam(Team *teams1,Team *teams2){
     Team temp = *teams1;
     *teams1 = *teams2;
     *teams2 = temp;
 }
 
-
+//the function copy the season->array_drivers to the input
 static void seasonCopyTheArrayDriver(Season season,Driver * array_drivers, int size_of_array){
     for(int i=0; i<size_of_array; i++){
         array_drivers[i]=season->array_drivers[i];
     }
 }
 
-
+//the function return the index_min between the points of all drivers in array_drivers.
 static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int size_of_array,DriverStatus *driver_status){
     int i, index_min=0;
     int points_min=DriverGetPoints(array_drivers[0], driver_status);
@@ -411,7 +419,7 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
     *driver_status=DRIVER_STATUS_OK;
     return index_min;
 }
-
+//the function sort all the drivers in array_drivers according to there points.
 static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status){
     int length;
     for(length=size_array;length>1;length--) {
@@ -422,14 +430,14 @@ static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_arr
         seasonSwapDriver(&array_drivers[i_min],&array_drivers[length - 1]);
     }
 }
-
+//swap function
 static void seasonSwapDriver(Driver *drivers1,Driver *drivers2) {
     Driver temp = *drivers1;
     *drivers1 = *drivers2;
     *drivers2 = temp;
 }
 
-
+//Get a season and return array of ptr sort according to there points
 Driver* SeasonGetDriversStandings(Season season){
     DriverStatus driver_status = DRIVER_STATUS_OK;
     int size_array=season->number_of_drivers;
@@ -446,6 +454,8 @@ Driver* SeasonGetDriversStandings(Season season){
     return new_array_drivers;
 }
 
+//get season position and status.
+//return the driver that we get input about the position.
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status){
     *status=SEASON_OK;
     if(season==NULL){
@@ -463,7 +473,7 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
 
     }
 }
-//* the function get id and return the driver from the season with this id*//
+//* the function get id and return the driver from the season with this id
 static void idGetDriver(Season season)
 {
     int size_array=season->number_of_drivers;

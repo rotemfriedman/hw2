@@ -17,21 +17,21 @@ struct team{
 Team TeamCreate(TeamStatus* status, char * name){
     Team new_team = malloc(sizeof(*new_team));
     if(new_team == NULL) {
-        *status = DRIVER_MEMORY_ERROR;
+        *status = TEAM_MEMORY_ERROR;
         return NULL;
     }
     new_team->first_driver=NULL;
     new_team->second_driver=NULL;
     char * local_team_name= malloc(strlen(name) + 1);       //allocate a place for the name team
     if( local_team_name== NULL) {
-        *status = DRIVER_MEMORY_ERROR;                      //update the status of the team
+        *status = TEAM_MEMORY_ERROR;                      //update the status of the team
         free(new_team);
         return NULL;
     }
 
     strcpy(local_team_name, name);         //copy the name of the team, to the field new_team->name_team
     new_team->name_team=local_team_name;
-    *status = DRIVER_STATUS_OK;
+    *status = TEAM_STATUS_OK;
     return new_team;
 
 }
@@ -41,9 +41,9 @@ Team TeamCreate(TeamStatus* status, char * name){
 const char * TeamGetName(Team team){
     if (team==NULL){
         return NULL;
-    } else {
-        return team->name_team;
     }
+        return team->name_team;
+
 }
 
 //Get name of Team and status
@@ -76,6 +76,8 @@ void TeamDestroy(Team team){
     free(team);
 }
 
+//Get a driver and a team, and add the driver to the current team.
+//The func’ return status frim type TeamStatus
 TeamStatus TeamAddDriver(Team team, Driver driver) {
     TeamStatus status;
     if (team == NULL || driver == NULL) {               //check if everything is ok, if the argument that we get is not NULL
@@ -105,9 +107,9 @@ Driver TeamGetDriver(Team team, DriverNumber driver_number){
     if((driver_number != FIRST_DRIVER) && (driver_number != SECOND_DRIVER) )  //check also that driver number difference from NULL
         return  NULL;
     if(driver_number == FIRST_DRIVER) {                //check if we need to return the pointer of the first driver
-        if(team->first_driver==NULL)
+        if(team->first_driver==NULL) {
             return NULL;
-        else
+        }else
             return team->first_driver;
     } else {                                          //we need to return the pointer of the second driver
         if(team->second_driver==NULL)
