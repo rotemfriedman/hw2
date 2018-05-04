@@ -15,11 +15,19 @@ struct team{
 //*Get the name of the team, and pointer of status, from type TeamStatus* .Put in status value- memory_error/status ok*//
 //*return a new team from a type team(that we create) and null if the team is not created.*//
 Team TeamCreate(TeamStatus* status, char * name){
+    if(status==NULL ) {
+        return NULL;
+    }
+    if(name==NULL){
+       *status=TEAM_NULL_PTR;
+        return NULL;
+    }
     Team new_team = malloc(sizeof(*new_team));
     if(new_team == NULL) {
         *status = TEAM_MEMORY_ERROR;
         return NULL;
     }
+
     new_team->first_driver=NULL;
     new_team->second_driver=NULL;
     char * local_team_name= malloc(strlen(name) + 1);       //allocate a place for the name team. a local team name
