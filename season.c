@@ -398,8 +398,8 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
             return 0;
         }
         if(points_min==points_in_index_i){
-            int id_index_min=DriverGetId(season->array_drivers[index_min]);
-            int id_i=DriverGetId(season->array_drivers[i]);
+            int id_index_min=DriverGetId(array_drivers[index_min]);
+            int id_i=DriverGetId(array_drivers[i]);
             for(int j=0;j<season->number_of_drivers;j++)
             {
             if(season->race_result[j]==id_index_min){
@@ -464,13 +464,13 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
         return NULL;
     }
     int size_array=season->number_of_drivers;
-    Driver *new_array_drivers;
-    new_array_drivers=SeasonGetDriversStandings(season);
     if( position <=0 || position > size_array) {    //the position is not legal
         *status = BAD_SEASON_INFO;
         return NULL;
     }else{
         *status = SEASON_OK;
+        Driver *new_array_drivers;
+        new_array_drivers=SeasonGetDriversStandings(season);
         Driver result=new_array_drivers[position-1];
         free(new_array_drivers);
         return result;
