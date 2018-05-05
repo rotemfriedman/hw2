@@ -512,6 +512,8 @@ Driver* SeasonGetDriversStandings(Season season){
 //get season position and status.
 //return the driver that we get input about the position.
 Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* status){
+    if(season==NULL)
+        return NULL;
     int size_array=season->number_of_drivers;
     if( position <=0 || position > size_array) {    //the position is not legal
         if(status!=NULL) {
@@ -527,7 +529,6 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
         Driver result=new_array_drivers[position-1];
         free(new_array_drivers);
         return result;
-
     }
 }
 //* the function get id and return the driver from the season with this id
