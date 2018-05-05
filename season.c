@@ -349,20 +349,16 @@ static void seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_
 static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status){
     int i,j, index_min=0;
     int points_min=TeamGetPoints(array_team[0], team_status);
-    if(team_status!=NULL) {
-        if (*team_status == TEAM_NULL_PTR) {
+    if(team_status!=NULL)
+        if (*team_status == TEAM_NULL_PTR)
             return 0;
-        }
-    }
     int points_in_index_i;
     for(i=1; i<size_of_array; i++)
     {
         points_in_index_i=TeamGetPoints(array_team[i], team_status);
-        if(team_status!=NULL) {
-            if(*team_status == TEAM_NULL_PTR){
-            return 0;
-            }
-        }
+        if(team_status!=NULL)
+            if(*team_status == TEAM_NULL_PTR)
+              return 0;
         if(points_min == points_in_index_i){
             Driver driver1_for_index_min = TeamGetDriver(array_team[index_min],FIRST_DRIVER);
             Driver driver2_for_index_min  = TeamGetDriver(array_team[index_min],SECOND_DRIVER);
@@ -377,16 +373,13 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
                     points_min=points_in_index_i;
                     index_min=i;
                     break;
-                }
-                else if(season->race_result[j] == id2_index_min){
+                } else if(season->race_result[j] == id2_index_min){
                     points_min=points_in_index_i;
                     index_min=i;
                     break;
-                }
-                else if(season->race_result[j] == id3_index_i){
+                } else if(season->race_result[j] == id3_index_i){
                     break;
-                }
-                else if(season->race_result[j] == id4_index_i){
+                } else if(season->race_result[j] == id4_index_i){
                     break;
                 }
             }
@@ -395,9 +388,8 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
                 index_min=i;
         }
     }
-    if(team_status!=NULL) {
+    if(team_status!=NULL)
         *team_status = TEAM_STATUS_OK;
-    }
     return index_min;
 }
 
