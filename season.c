@@ -65,12 +65,12 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     Driver *temp_driver=NULL;                                           //pointer that help us to insert the data to the Driver's araay
     Season new_season = malloc(sizeof(*new_season));                    //create the new season
     if(new_season == NULL) {                                            //free the season. return NULL
-        updateSeasonErrorMemoryAndDestroy(new_season, &status);
+        updateSeasonErrorMemoryAndDestroy(new_season, status);
         return NULL;
     }
     char * my_season_info = copyFileSeasonCreate(season_info, status);
     if(status!=NULL) {
-        updateSeasonErrorMemoryAndDestroy(new_season, &status);
+        updateSeasonErrorMemoryAndDestroy(new_season, status);
         return NULL;
     }
     char *token=strtok(my_season_info, "\n");
@@ -88,7 +88,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     }
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
-        updateSeasonErrorMemory(&status);
+        updateSeasonErrorMemory(status);
         free(new_season_info);
         destroyMySeason(new_season);
         return NULL;
@@ -97,7 +97,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     putNullInTheTeamArray(temp_team, team_number);
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
     if((new_season->array_drivers) == NULL) {
-        updateSeasonErrorMemory(&status);
+        updateSeasonErrorMemory(status);
         free(new_season_info);
         free(new_season->array_team);
         destroyMySeason(new_season);                                           //this function return NULL
@@ -184,8 +184,8 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     int team_number=0;
     char *token=strtok(season_info, "\n");
     token=strtok(NULL, "\n");
-    while(token != NULL)
-    { *temp_team=TeamCreate(&status_team,token);
+    while(token != NULL){
+     *temp_team=TeamCreate(&status_team,token);
         if (status_team == TEAM_MEMORY_ERROR) {              //there was a memory error in the func' TeamCreate
             destroyFinishInCreateSeason(temp_team, temp_driver, season);
             return;
