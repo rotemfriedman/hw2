@@ -69,9 +69,11 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         return NULL;
     }
     char * my_season_info = copyFileSeasonCreate(season_info, status);
-    if(status==NULL) {
-        updateSeasonErrorMemoryAndDestroy(new_season, status);
-        return NULL;
+    if(status!=NULL) {
+        if(*status==SEASON_MEMORY_ERROR){
+            destroyMySeason(new_season);
+            return NULL;
+        }
     }
     char *token=strtok(my_season_info, "\n");
     int season_year=atoi(token);                                         //conveert char to int.

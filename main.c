@@ -161,7 +161,7 @@ int SeasonUnitTest(int *tests_passed) {
     test( SeasonGetNumberOfDrivers(season) != 2, __LINE__, &test_number, "SeasonCreate didn't assign number of teams correctly", tests_passed);
     Season season2 = SeasonCreate(&status, "2018\nTeam_1\nDriver_1\nNone\n");
     test( SeasonGetNumberOfDrivers(season2) != 1, __LINE__, &test_number, "SeasonCreate assigned driver with \"None\" name", tests_passed);
-    test( SeasonGetDriverByPosition(NULL, 1, &status) == NULL,  __LINE__, &test_number, "SeasonGetDriverByPosition doesn't return NULL on NULL season input", tests_passed);
+    test( SeasonGetDriverByPosition(NULL, 1, &status) != NULL,  __LINE__, &test_number, "SeasonGetDriverByPosition doesn't return NULL on NULL season input", tests_passed);
     test( SeasonGetDriverByPosition(season, 1, NULL) == NULL,  __LINE__, &test_number, "SeasonGetDriverByPosition doesn't allow NULL status input", tests_passed);
     driver1 = SeasonGetDriverByPosition(season, -1, &status);
     test( status == SEASON_OK ,  __LINE__, &test_number, "SeasonGetDriverByPosition assigns SEASON_OK on negative position input", tests_passed);
