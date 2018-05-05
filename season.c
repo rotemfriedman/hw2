@@ -21,7 +21,7 @@ static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp
 //this function put in the array of drivers and the array of teams NULL
 static void putNullInTheTeamArray(Team * temp_team, int number_of_team);
 static void putNullInTheDriverArray(Driver* temp_driver, int number_of_driver);
-
+static void checkStatusDriver(DriverStatus status_driver,Season season,Team *temp_team, Driver *temp_driver);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //SeasonGetDriversStandings help and SeasonGetTeamsStandings help
@@ -177,8 +177,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     char *token=strtok(season_info, "\n");
     token=strtok(NULL, "\n");
     while(token != NULL)
-    {
-        *temp_team=TeamCreate(&status_team,token);
+    { *temp_team=TeamCreate(&status_team,token);
         if (status_team == TEAM_MEMORY_ERROR) {              //there was a memory error in the func' TeamCreate
             destroyFinishInCreateSeason(temp_team, temp_driver, season);
             return;
@@ -187,20 +186,15 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         token=strtok(NULL, "\n");                            //continue to the driver
         if(strcmp(token, "None")==0){
             token=strtok(NULL, "\n");                        //continue to the driver
-        }
-        else {
+        } else {
             *temp_driver=DriverCreate(&status_driver,token, get_id);
-            if (status_driver == DRIVER_MEMORY_ERROR){       //there was a memory error in the func' DriverCreate
-                destroyFinishInCreateSeason(temp_team, temp_driver, season);
-                return;
-            }
+            checkStatusDriver(status_driver,season,temp_team, temp_driver);
             DriverSetTeam(*temp_driver, *temp_team);
             DriverSetSeason(*temp_driver, season);
             status_team = TeamAddDriver(*temp_team, *temp_driver);
             checkIfTeamStatusIsNull(season, temp_team, temp_driver, &status_team);
-            if(status_team==TEAM_NULL_PTR){
+            if(status_team==TEAM_NULL_PTR)
                 return;
-            }
             get_id++;                                       //get_id +1 to the next driver
             temp_driver++;
             token=strtok(NULL, "\n");                       //continue to the driver
@@ -211,17 +205,13 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
             continue;
         }
         *temp_driver=DriverCreate(&status_driver,token, get_id);
-        if (status_driver == DRIVER_MEMORY_ERROR){           //there was a memory error in the func' DriverCreate
-            destroyFinishInCreateSeason(temp_team, temp_driver, season);
-            return;
-        }
+        checkStatusDriver(status_driver,season,temp_team, temp_driver);
         DriverSetTeam(*temp_driver, *temp_team);
         DriverSetSeason(*temp_driver, season);
         status_team = TeamAddDriver(*temp_team, *temp_driver);
         checkIfTeamStatusIsNull(season, temp_team, temp_driver, &status_team);
-        if(status_team==TEAM_NULL_PTR){
+        if(status_team==TEAM_NULL_PTR)
             return;
-        }
         get_id++;                                           //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                           //continue to the next team
@@ -232,6 +222,13 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
     if(season->race_result==NULL) {
         seasonDestroyWithOutRaceResult(season);
+        return;
+    }
+}
+
+static void checkStatusDriver(DriverStatus status_driver,Season season,Team *temp_team, Driver *temp_driver) {
+    if (status_driver == DRIVER_MEMORY_ERROR) {           //there was a memory error in the func' DriverCreate
+        destroyFinishInCreateSeason(temp_team, temp_driver, season);
         return;
     }
 }
