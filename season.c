@@ -69,7 +69,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         return NULL;
     }
     char * my_season_info = copyFileSeasonCreate(season_info, status);
-    if(status!=NULL) {
+    if(status==NULL) {
         updateSeasonErrorMemoryAndDestroy(new_season, status);
         return NULL;
     }
