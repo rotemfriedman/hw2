@@ -69,10 +69,13 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
         return NULL;
     }
     char * my_season_info = copyFileSeasonCreate(season_info, status);
-    if( *status == SEASON_MEMORY_ERROR ){                               //there was a error memory. return NULL
-        destroyMySeason(new_season);
-        return NULL;
+    if(status!=NULL) {
+        if (*status == SEASON_MEMORY_ERROR) {                               //there was a error memory. return NULL
+            destroyMySeason(new_season);
+            return NULL;
+        }
     }
+
     char *token=strtok(my_season_info, "\n");
     int season_year=atoi(token);                                         //conveert char to int.
     new_season->year=season_year;                                        //insert the year to the season
@@ -80,9 +83,11 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     int total_driver_number=team_number*2;                               //the number of drivers that we have in the season, including NULL
     free (my_season_info);
     char * new_season_info = copyFileSeasonCreate(season_info, status);  //start again and skip the year
-    if( *status == SEASON_MEMORY_ERROR ){                                //there was a error memory. return NULL
-        destroyMySeason(new_season);
-        return NULL;
+    if(status!=NULL) {
+        if (*status == SEASON_MEMORY_ERROR) {                                //there was a error memory. return NULL
+            destroyMySeason(new_season);
+            return NULL;
+        }
     }
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
@@ -230,7 +235,6 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         seasonDestroyWithOutRaceResult(season);
         return;
     }
-
 }
 
 static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team){
@@ -463,7 +467,6 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
             index_min=i;
             points_min=points_in_index_i;
         }
-
     }
     if(driver_status!=NULL) {
         *driver_status = DRIVER_STATUS_OK;
