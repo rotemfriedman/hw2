@@ -11,10 +11,14 @@ static int rowsNumberInSeasonInfo(char *token);
 static void insertTheDataToSeason(Season season, char * season_info, Team *temp_team, Driver *temp_driver); //the main function that make the seasonCreate
 static Season destroyMySeason(Season season);                               //function that destroy the season that we created in the SeasonCreate
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
-static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //
-static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
-static void seasonDestroyWithOutRaceResult(Season season);
+static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //destroy the array team and sriver by index
 
+//destroy the index of the team and driver array, the array and the season
+static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
+
+static void seasonDestroyWithOutRaceResult(Season season); // destroy Season but with out destroy the feild "race_result"
+static void updateSeasonErrorMemoryAndDestroy (Season season, SeasonStatus * status_season); //update the status_season to Error memory and destroy
+static void updateSeasonErrorMemory (SeasonStatus * status_season);  //update the status_season to Error memory
 //check if the team_status return a "TEAM_NULL_PTR"
 static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team);
 
@@ -55,25 +59,19 @@ struct season {
 //4)	Insert the numbers of drivers
 //5)	Make a array if the names of the drivers
 Season SeasonCreate(SeasonStatus* status,const char* season_info){
-   if(status!=NULL) {
+   if(status!=NULL)
        *status = SEASON_OK;
-   }
     Team *temp_team = NULL;                                             //pointer that help us to insert the data to the Team's array
     Driver *temp_driver=NULL;                                           //pointer that help us to insert the data to the Driver's araay
     Season new_season = malloc(sizeof(*new_season));                    //create the new season
     if(new_season == NULL) {                                            //free the season. return NULL
-        if(status!=NULL) {
-            *status = SEASON_MEMORY_ERROR;
-        }
-        destroyMySeason(new_season);
+        updateSeasonErrorMemoryAndDestroy(new_season, &status);
         return NULL;
     }
     char * my_season_info = copyFileSeasonCreate(season_info, status);
     if(status!=NULL) {
-        if (*status == SEASON_MEMORY_ERROR) {                               //there was a error memory. return NULL
-            destroyMySeason(new_season);
-            return NULL;
-        }
+        updateSeasonErrorMemoryAndDestroy(new_season, &status);
+        return NULL;
     }
     char *token=strtok(my_season_info, "\n");
     int season_year=atoi(token);                                         //conveert char to int.
@@ -90,9 +88,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     }
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
-        if(status!=NULL) {
-            *status = SEASON_MEMORY_ERROR;
-        }
+        updateSeasonErrorMemory(&status);
         free(new_season_info);
         destroyMySeason(new_season);
         return NULL;
@@ -101,9 +97,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     putNullInTheTeamArray(temp_team, team_number);
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
     if((new_season->array_drivers) == NULL) {
-        if(status!=NULL) {
-            *status = SEASON_MEMORY_ERROR;
-        }
+        updateSeasonErrorMemory(&status);
         free(new_season_info);
         free(new_season->array_team);
         destroyMySeason(new_season);                                           //this function return NULL
@@ -115,6 +109,20 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     free(new_season_info);
     return new_season;
 }
+
+//update the status_season to Error memory and destroy the season
+static void updateSeasonErrorMemoryAndDestroy (Season season, SeasonStatus * status_season){
+    if(status_season!=NULL)
+        *status_season = SEASON_MEMORY_ERROR;
+    destroyMySeason(season);
+}
+
+//update the status_season to Error memory
+static void updateSeasonErrorMemory (SeasonStatus * status_season){
+    if(status_season!=NULL)
+        *status_season = SEASON_MEMORY_ERROR;
+}
+
 
 //copy the file season_info, to file my_season_info.
 static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status){
@@ -552,37 +560,4 @@ SeasonStatus SeasonAddRaceResult(Season season, int* results){
     return SEASON_OK;
 }
 
-
-
-Driver* Season_help_check (Season season){
-    return season->array_drivers;
-}
-
-
-//func that help us for check:
-void printpointDriver(Season season)
-{
-    DriverStatus status;
-for(int i=0;i<season->number_of_drivers;i++) {
-    int x = DriverGetPoints(season->array_drivers[i], &status);
-    printf("the point of the driver number %d his points is %d\n", i+1,x);
-}
-}
-
-//func that help us for check:
-void printpointTeam(Season season)
-{
-    TeamStatus status;
-    for(int i=0;i<season->number_of_teams;i++) {
-        int x = TeamGetPoints (season->array_team[i], &status);
-        printf("the point of the team number %d his points is %d\n", i+1,x);
-    }
-}
-
-void printPointArrayTeam(Team* array_team, int number_of_teams){
-    for(int i=0; i<number_of_teams; i++){
-       const char* name_team= TeamGetName(array_team[i]);
-        printf("the team number %d, is %s\n", i+1, name_team);
-    }
-}
 

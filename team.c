@@ -135,7 +135,3 @@ Driver TeamGetDriver(Team team, DriverNumber driver_number){
     }
 
 }
-
-void print_the_position_team (Team team){
-    printf("the team is %s", team->name_team);
-}

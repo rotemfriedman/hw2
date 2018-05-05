@@ -23,5 +23,4 @@ const char * TeamGetName(Team  team);
 Driver TeamGetDriver(Team  team, DriverNumber driver_number);
 int TeamGetPoints(Team  team, TeamStatus *status);
 
-void print_the_position_team (Team team); ///////////not good
 #endif /* TEAM_H_ */
