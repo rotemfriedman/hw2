@@ -75,7 +75,6 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
             return NULL;
         }
     }
-
     char *token=strtok(my_season_info, "\n");
     int season_year=atoi(token);                                         //conveert char to int.
     new_season->year=season_year;                                        //insert the year to the season
