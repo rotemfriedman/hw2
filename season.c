@@ -18,7 +18,7 @@ static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Se
 
 static void seasonDestroyWithOutRaceResult(Season season); // destroy Season but with out destroy the feild "race_result"
 static void updateSeasonErrorMemoryAndDestroy (Season season, SeasonStatus * status_season); //update the status_season to Error memory and destroy
-static void updateSeasonErrorMemory (SeasonStatus * status_season);  //update the status_season to Error memory
+static void updateSeasonErrorMemory (SeasonStatus * status_season, char * new_season_info);  //update the status_season to Error memory
 //check if the team_status return a "TEAM_NULL_PTR"
 static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team);
 
@@ -90,8 +90,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     }
     new_season->array_team=malloc(sizeof(*(new_season->array_team))*team_number);
     if((new_season->array_team) == NULL) {
-        updateSeasonErrorMemory(status);
-        free(new_season_info);
+        updateSeasonErrorMemory(status, new_season_info);
         destroyMySeason(new_season);
         return NULL;
     }
@@ -99,8 +98,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     putNullInTheTeamArray(temp_team, team_number);
     new_season->array_drivers=malloc(sizeof(*(new_season->array_drivers))*total_driver_number);
     if((new_season->array_drivers) == NULL) {
-        updateSeasonErrorMemory(status);
-        free(new_season_info);
+        updateSeasonErrorMemory(status, new_season_info);
         free(new_season->array_team);
         destroyMySeason(new_season);                                           //this function return NULL
     return NULL;
@@ -120,9 +118,10 @@ static void updateSeasonErrorMemoryAndDestroy (Season season, SeasonStatus * sta
 }
 
 //update the status_season to Error memory
-static void updateSeasonErrorMemory (SeasonStatus * status_season){
+static void updateSeasonErrorMemory (SeasonStatus * status_season, char * new_season_info){
     if(status_season!=NULL)
         *status_season = SEASON_MEMORY_ERROR;
+    free (new_season_info);
 }
 
 
@@ -336,7 +335,6 @@ Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus * status)
         return NULL;
         }
     Team * array_team = SeasonGetTeamsStandings(season);
-    int number_of_teams=season->number_of_teams;
     if(status!=NULL) {
         *status = SEASON_OK;
     }
