@@ -21,7 +21,8 @@ static void updateSeasonErrorMemoryAndDestroy (Season season, SeasonStatus * sta
 static void updateSeasonErrorMemory (SeasonStatus * status_season, char * new_season_info);  //update the status_season to Error memory
 //check if the team_status return a "TEAM_NULL_PTR"
 static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team);
-
+static void checkIfRaceResultIsNull(Season season);
+static void checkIfTSIsNull(TeamStatus status_team);
 //this function put in the array of drivers and the array of teams NULL
 static void putNullInTheTeamArray(Team * temp_team, int number_of_team);
 static void putNullInTheDriverArray(Driver* temp_driver, int number_of_driver);
@@ -202,8 +203,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
             DriverSetSeason(*temp_driver, season);
             status_team = TeamAddDriver(*temp_team, *temp_driver);
             checkIfTeamStatusIsNull(season, temp_team, temp_driver, &status_team);
-            if(status_team==TEAM_NULL_PTR)
-                return;
+            checkIfTSIsNull(status_team);
             get_id++;                                       //get_id +1 to the next driver
             temp_driver++;
             token=strtok(NULL, "\n");                       //continue to the driver
@@ -219,8 +219,7 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
         DriverSetSeason(*temp_driver, season);
         status_team = TeamAddDriver(*temp_team, *temp_driver);
         checkIfTeamStatusIsNull(season, temp_team, temp_driver, &status_team);
-        if(status_team==TEAM_NULL_PTR)
-            return;
+        checkIfTSIsNull(status_team);
         get_id++;                                           //get_id +1 to the next driver
         temp_driver++;
         token=strtok(NULL, "\n");                           //continue to the next team
@@ -229,12 +228,24 @@ static void insertTheDataToSeason(Season season, char * season_info, Team *temp_
     season->number_of_teams=team_number;
     season->number_of_drivers=get_id-1;
     season->race_result=malloc(sizeof(*(season->race_result))*season->number_of_drivers);
+    checkIfRaceResultIsNull(season);
+}
+
+static void checkIfTSIsNull(TeamStatus status_team)
+{
+    if(status_team==TEAM_NULL_PTR)
+        return;
+
+}
+
+
+static void checkIfRaceResultIsNull(Season season)
+{
     if(season->race_result==NULL) {
         seasonDestroyWithOutRaceResult(season);
         return;
     }
 }
-
 static void checkStatusDriver(DriverStatus status_driver,Season season,Team *temp_team, Driver *temp_driver) {
     if (status_driver == DRIVER_MEMORY_ERROR) {           //there was a memory error in the func' DriverCreate
         destroyFinishInCreateSeason(temp_team, temp_driver, season);
