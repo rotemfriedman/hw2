@@ -19,7 +19,7 @@ static void seasonDestroyWithOutRaceResult(Season season); // destroy Season but
 static void seasonErrorAndDestroy(Season season, SeasonStatus * status_season); //update the status_season to Error memory and destroy
 static void errorMemory(SeasonStatus * status_season,char * new_season_info);  //update the status_season to Error memory
 //check if the team_status return a "TEAM_NULL_PTR"
-static void checkIfTeamStatusIsNull(Season season,Team *temp_team,Driver *temp_driver,TeamStatus * status_team);
+static void checkIfTeamStatusIsNull(Season season, Team *temp_team,Driver *temp_driver,TeamStatus *status_team);
 static void checkIfRaceResultIsNull(Season season);
 static void checkIfTSIsNull(TeamStatus status_team);
 //this function put in the array of drivers and the array of teams NULL
@@ -252,7 +252,7 @@ static void checkStatusDriver(DriverStatus status_driver,Season season,Team *tem
     }
 }
 
-static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team){
+static void checkIfTeamStatusIsNull(Season season, Team *temp_team,Driver *temp_driver,TeamStatus *status_team){
     if(status_team!=NULL) {
         if (*status_team ==
             TEAM_NULL_PTR) {                  //it's not good because  it's mean *temp_team or *temp_driver are NULL
