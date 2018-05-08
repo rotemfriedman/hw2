@@ -29,8 +29,6 @@ static void checkStatusDriver(DriverStatus status_driver,Season season,Team *tem
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //SeasonGetDriversStandings help and SeasonGetTeamsStandings help
-//static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
-//static void seasonMinSortDriver(Season season, Driver *array_dr ivers,int size_array);
 
 static void seasonSwapTeam(Team *teams1,Team *teams2);            //function that swap when we make a sort in the team array
 static void SortTeam(Season season,Team *array_teams,int size,TeamStatus *team_status);
