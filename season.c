@@ -8,10 +8,10 @@
 //this static function used for the function: seasonCreate
 static char* copyFileSeasonCreate(const char* season_info, SeasonStatus* status);                //function that copy the const file - "season_file" to other file
 static int rowsNumberInSeasonInfo(char *token);
-static void insertTheDataToSeason(Season season, char * season_info, Team *temp_team, Driver *temp_driver); //the main function that make the seasonCreate
+static void insertData(Season season, char* season_info,Team *temp_team,Driver *temp_driver); //the main function that make the seasonCreate
 static Season destroyMySeason(Season season);                               //function that destroy the season that we created in the SeasonCreate
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
-static void destroyArrayByIndex (int team_index, int driver_index, Season season );   //destroy the array team and sriver by index
+static void destroyArrayByIndex (int team_index,int driver_index,Season season);   //destroy the array team and sriver by index
 
 //destroy the index of the team and driver array, the array and the season
 static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Season season);
@@ -106,7 +106,7 @@ Season SeasonCreate(SeasonStatus* status,const char* season_info){
     }
     temp_driver=new_season->array_drivers;
     putNullInTheDriverArray(temp_driver, total_driver_number);
-    insertTheDataToSeason(new_season, new_season_info, temp_team, temp_driver);
+    insertData(new_season, new_season_info, temp_team, temp_driver);
     free(new_season_info);
     return new_season;
 }
@@ -179,7 +179,7 @@ static void destroyFinishInCreateSeason(Team *temp_team, Driver *temp_driver, Se
     destroyMySeason(season);
 }
 
-static void insertTheDataToSeason(Season season, char * season_info, Team *temp_team, Driver *temp_driver){
+static void insertData(Season season, char* season_info,Team *temp_team,Driver *temp_driver){
     int get_id=1;                                             //the driver need to get a id
     DriverStatus status_driver=DRIVER_STATUS_OK;
     TeamStatus status_team=TEAM_STATUS_OK;
