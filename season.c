@@ -8,7 +8,7 @@
 //this static function used for the function: seasonCreate
 static char* copyFileSeasonCreate(const char* season_info,SeasonStatus* status);                //function that copy the const file - "season_file" to other file
 static int rowsNumberInSeasonInfo(char *token);
-static void insertData(Season season, char* season_info,Team *temp_team,Driver *temp_driver); //the main function that make the seasonCreate
+static void insertData(Season season,char* season_info,Team *temp_team,Driver *temp_driver); //the main function that make the seasonCreate
 static Season destroyMySeason(Season season);                               //function that destroy the season that we created in the SeasonCreate
 static void destroyMyArray (Team *team, Driver *driver);                     //function that destroy the arrays of the teams and the drivers
 static void destroyArrayByIndex (int team_index,int driver_index,Season season);   //destroy the array team and sriver by index
@@ -32,12 +32,12 @@ static void checkStatusDriver(DriverStatus status_driver,Season season,Team *tem
 //static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
 //static void seasonMinSortDriver(Season season, Driver *array_dr ivers,int size_array);
 
-static void seasonSwapTeam(Team *teams1,Team *teams2);
-static void  seasonMinSortTeam(Season season, Team *array_teams,int size_array, TeamStatus * team_status);
+static void seasonSwapTeam(Team *teams1,Team *teams2);            //function that swap when we make a sort in the team array
+static void SortTeam(Season season, Team *array_teams,int size,TeamStatus *team_status);
 static void seasonCopyTheArrayTeam(Season season, Team * array_team, int size_of_array);
 static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status);
-static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);
-static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status);
+static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);     //function that swap when we make a sort in the driver array
+static void SortDriver(Season season,Driver *array_driver,int size,DriverStatus *driver_status);
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
 static int seasonFindTheMinDriver (Season season, Driver *array_drivers, int size_of_array,DriverStatus *driver_status);
 static void idGetDriver(Season season);
@@ -160,7 +160,7 @@ static void destroyMyArray (Team *team, Driver *driver){
 }
 
 
-static void destroyArrayByIndex (int team_index, int driver_index, Season season ){
+static void destroyArrayByIndex (int team_index,int driver_index,Season season){
     int index;
     for(index=0; index<team_index; index++){                        //we dont need to free the index-difference, because his allocation failed
         TeamDestroy(season->array_team[index]);
@@ -320,7 +320,7 @@ Team* SeasonGetTeamsStandings(Season season){
         return NULL;
     }
     seasonCopyTheArrayTeam(season, new_array_teams, size_array);
-    seasonMinSortTeam(season, new_array_teams, size_array, &team_status);
+    SortTeam(season, new_array_teams, size_array, &team_status);
     if(team_status == TEAM_NULL_PTR){
         free(new_array_teams);
         return NULL;
@@ -409,9 +409,9 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
 }
 
 //the function sort all the teams in array team according to there points.
-static void seasonMinSortTeam(Season season, Team *array_teams,int size_array, TeamStatus * team_status){
+static void SortTeam(Season season, Team *array_teams,int size,TeamStatus *team_status){
     int length;
-    for(length=size_array;length>1;length--) {
+    for(length=size;length>1;length--) {
         int i_min = seasonFindTheMinTeam(season,array_teams, length, team_status);
         if(team_status!=NULL) {
             if( *team_status == TEAM_NULL_PTR){
@@ -422,6 +422,7 @@ static void seasonMinSortTeam(Season season, Team *array_teams,int size_array, T
     }
 
 }
+
 //swap function
 static void seasonSwapTeam(Team *teams1,Team *teams2){
     Team temp = *teams1;
@@ -480,16 +481,16 @@ static int seasonFindTheMinDriver(Season season, Driver * array_drivers, int siz
     return index_min;
 }
 //the function sort all the drivers in array_drivers according to there points.
-static void seasonMinSortDriver(Season season,Driver *array_drivers,int size_array,DriverStatus *driver_status){
+static void SortDriver(Season season,Driver *array_driver,int size,DriverStatus *driver_status){
     int length;
-    for(length=size_array;length>1;length--) {
-        int i_min = seasonFindTheMinDriver(season,array_drivers, length,driver_status);
+    for(length=size;length>1;length--) {
+        int i_min = seasonFindTheMinDriver(season,array_driver, length,driver_status);
         if(driver_status!=NULL) {
             if (*driver_status == INVALID_DRIVER) {
                 return;
             }
         }
-        seasonSwapDriver(&array_drivers[i_min],&array_drivers[length - 1]);
+        seasonSwapDriver(&array_driver[i_min],&array_driver[length - 1]);
     }
 }
 //swap function
@@ -511,7 +512,7 @@ Driver* SeasonGetDriversStandings(Season season){
         return NULL;
     }
     seasonCopyTheArrayDriver(season,new_array_drivers,size_array);
-    seasonMinSortDriver(season,new_array_drivers,size_array,&driver_status);
+    SortDriver(season,new_array_drivers,size_array,&driver_status);
     if(driver_status == INVALID_DRIVER){
         free(new_array_drivers);
         return NULL;
