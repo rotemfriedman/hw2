@@ -6,7 +6,7 @@
 #include <string.h>
 
 //this static function used for the function: seasonCreate
-static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status);                //function that copy the const file - "season_file" to other file
+static char* copyFileSeasonCreate(const char* season_info, SeasonStatus* status);                //function that copy the const file - "season_file" to other file
 static int rowsNumberInSeasonInfo(char *token);
 static void insertTheDataToSeason(Season season, char * season_info, Team *temp_team, Driver *temp_driver); //the main function that make the seasonCreate
 static Season destroyMySeason(Season season);                               //function that destroy the season that we created in the SeasonCreate
@@ -127,7 +127,7 @@ static void updateSeasonErrorMemory (SeasonStatus * status_season, char * new_se
 
 
 //copy the file season_info, to file my_season_info.
-static char * copyFileSeasonCreate(const char* season_info, SeasonStatus* status){
+static char* copyFileSeasonCreate(const char* season_info,SeasonStatus* status){
     int length_of_season_info=strlen(season_info)+1;             //get the length of the file - season_info
     char* copy_season_info=malloc(sizeof(char)*length_of_season_info);
     if(copy_season_info == NULL) {
