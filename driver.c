@@ -15,7 +15,8 @@ struct driver {
     Season driver_season;
 };
 
-//*Get a driver and a team. The func’ update the deriver->team to be the current team the the func’ get.*//
+//*Get a driver and a team. The func’ update the deriver->team
+// to be the current team the the func’ get.
 void DriverSetTeam(Driver driver, Team team){
     if( driver==NULL || team==NULL ){        //if team or driver NULL finish the program.
         return;
@@ -26,7 +27,7 @@ void DriverSetTeam(Driver driver, Team team){
 //get a driver, and return ptr to the name of the driver.
 //If the func’ get NULL return NULL.
 const char* DriverGetName(Driver driver){
-    if (driver==NULL) {                      //if driver NULL finish the program
+    if (driver==NULL) {                     //if driver NULL finish the program
         return NULL;
     }
         return driver->driver_name;
@@ -52,7 +53,8 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
         free(new_driver);
         return NULL;
     }
-    char * local_driver_name=malloc(strlen(driver_name) + 1);        // allocate a local driver name
+    // allocate a local driver name
+    char * local_driver_name=malloc(strlen(driver_name) + 1);
     if(local_driver_name == NULL) {
         if(status!=NULL){
         *status = DRIVER_MEMORY_ERROR;
@@ -60,7 +62,8 @@ Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId) {
         free(new_driver);
         return NULL;
     }
-    new_driver->id = driverId;                           //create the new driver with the input of new driver
+    //create the new driver with the input of new driver
+    new_driver->id = driverId;
     strcpy(local_driver_name, driver_name);
     new_driver->driver_name=local_driver_name;
     if(status!=NULL){
@@ -145,3 +148,4 @@ DriverStatus DriverAddRaceResult(Driver driver, int position){
     driver->points+=y;                           //update points of driver
     return DRIVER_STATUS_OK;
 }
+

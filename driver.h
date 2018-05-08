@@ -17,7 +17,6 @@ typedef enum driverStatus {
     INVALID_DRIVER,
     INVALID_POSITION} DriverStatus;
 
-
 Driver DriverCreate(DriverStatus* status, char* driver_name, int driverId);
 void   DriverDestroy(Driver driver);
 const char* DriverGetName(Driver driver);
