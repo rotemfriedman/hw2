@@ -331,7 +331,7 @@ Team* SeasonGetTeamsStandings(Season season){
 
 //the function  get a season and position and status.
 //return the team that in this position.
-Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus * status){
+Team SeasonGetTeamByPosition(Season season,int position,SeasonStatus * status){
     if(season == NULL){
         if(status!=NULL) {
             *status = SEASON_NULL_PTR;
@@ -375,12 +375,12 @@ static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_a
             if(*team_status == TEAM_NULL_PTR)
                 return 0;
         if(points_min == points_in_index_i){
-            Driver driver1_for_index_min = TeamGetDriver(array_team[index_min],FIRST_DRIVER);
-            Driver driver2_for_index_min  = TeamGetDriver(array_team[index_min],SECOND_DRIVER);
-            Driver driver3_for_index_i  = TeamGetDriver(array_team[i],FIRST_DRIVER);
-            Driver driver4_for_index_i  = TeamGetDriver(array_team[i],SECOND_DRIVER);
-            int id1_index_min = DriverGetId(driver1_for_index_min);
-            int id2_index_min = DriverGetId(driver2_for_index_min);
+            Driver driver1_index_min=TeamGetDriver(array_team[index_min],FIRST_DRIVER);
+            Driver driver2_index_min=TeamGetDriver(array_team[index_min],SECOND_DRIVER);
+            Driver driver3_for_index_i=TeamGetDriver(array_team[i],FIRST_DRIVER);
+            Driver driver4_for_index_i=TeamGetDriver(array_team[i],SECOND_DRIVER);
+            int id1_index_min = DriverGetId(driver1_index_min);
+            int id2_index_min = DriverGetId(driver2_index_min);
             int id3_index_i = DriverGetId(driver3_for_index_i);
             int id4_index_i = DriverGetId(driver4_for_index_i);
             for(j=0; j< season->number_of_drivers; j++){
