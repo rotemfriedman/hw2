@@ -19,7 +19,7 @@ static void seasonDestroyWithOutRaceResult(Season season); // destroy Season but
 static void seasonErrorAndDestroy(Season season, SeasonStatus * status_season); //update the status_season to Error memory and destroy
 static void errorMemory(SeasonStatus * status_season,char * new_season_info);  //update the status_season to Error memory
 //check if the team_status return a "TEAM_NULL_PTR"
-static void checkIfTeamStatusIsNull(Season season, Team *temp_team, Driver *temp_driver, TeamStatus * status_team);
+static void checkIfTeamStatusIsNull(Season season,Team *temp_team,Driver *temp_driver,TeamStatus * status_team);
 static void checkIfRaceResultIsNull(Season season);
 static void checkIfTSIsNull(TeamStatus status_team);
 //this function put in the array of drivers and the array of teams NULL
@@ -33,9 +33,9 @@ static void checkStatusDriver(DriverStatus status_driver,Season season,Team *tem
 //static void seasonMinSortDriver(Season season, Driver *array_dr ivers,int size_array);
 
 static void seasonSwapTeam(Team *teams1,Team *teams2);            //function that swap when we make a sort in the team array
-static void SortTeam(Season season, Team *array_teams,int size,TeamStatus *team_status);
-static void seasonCopyTheArrayTeam(Season season, Team * array_team, int size_of_array);
-static int seasonFindTheMinTeam (Season season, Team * array_team, int size_of_array, TeamStatus *team_status);
+static void SortTeam(Season season,Team *array_teams,int size,TeamStatus *team_status);
+static void copyTheArrayTeam(Season season,Team * array_team,int size_of_array);
+static int seasonFindTheMinTeam (Season season,Team * array_team,int size_of_array, TeamStatus *team_status);
 static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);     //function that swap when we make a sort in the driver array
 static void SortDriver(Season season,Driver *array_driver,int size,DriverStatus *driver_status);
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);
@@ -319,7 +319,7 @@ Team* SeasonGetTeamsStandings(Season season){
     if (new_array_teams == NULL){
         return NULL;
     }
-    seasonCopyTheArrayTeam(season, new_array_teams, size_array);
+    copyTheArrayTeam(season, new_array_teams, size_array);
     SortTeam(season, new_array_teams, size_array, &team_status);
     if(team_status == TEAM_NULL_PTR){
         free(new_array_teams);
@@ -354,7 +354,7 @@ Team SeasonGetTeamByPosition(Season season, int position, SeasonStatus * status)
 }
 
 //the function copy the season->array_team to the input
-static void seasonCopyTheArrayTeam(Season season,Team * array_team, int size_of_array){
+static void copyTheArrayTeam(Season season,Team * array_team, int size_of_array){
     for(int i=0; i<size_of_array; i++){
         array_team[i]=season->array_team[i];
     }
