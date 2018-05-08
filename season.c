@@ -35,7 +35,7 @@ static void checkStatusDriver(DriverStatus status_driver,Season season,Team *tem
 static void seasonSwapTeam(Team *teams1,Team *teams2);            //function that swap when we make a sort in the team array
 static void SortTeam(Season season,Team *array_teams,int size,TeamStatus *team_status);
 static void copyTheArrayTeam(Season season,Team * array_team,int size_of_array);
-static int seasonFindTheMinTeam (Season season,Team * array_team,int size_of_array, TeamStatus *team_status);
+static int seasonFindTheMinTeam (Season season,Team * array_team,int size_of_array,TeamStatus *team_status);
 static void seasonSwapDriver(Driver *drivers1,Driver *drivers2);     //function that swap when we make a sort in the driver array
 static void SortDriver(Season season,Driver *array_driver,int size,DriverStatus *driver_status);
 static void seasonCopyTheArrayDriver(Season season, Driver *array_drivers, int size_of_array);

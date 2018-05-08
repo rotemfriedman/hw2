@@ -148,4 +148,3 @@ DriverStatus DriverAddRaceResult(Driver driver, int position){
     driver->points+=y;                           //update points of driver
     return DRIVER_STATUS_OK;
 }
-
