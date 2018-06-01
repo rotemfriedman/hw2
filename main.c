@@ -26,8 +26,10 @@ Fernando Alonso\n\
 shaked\n\
 ";
 
- //*   Season result;
-    //result= SeasonCreate(&status_season,season_info);
+    Season result;
+    result= SeasonCreate(&status_season,season_info);
+    Driver * new_array_driver=SeasonGetDriversStandings(result);
+
     //DriverSetSeason(d1,result);
     //status_driver= DriverAddRaceResult(NULL,1);
      //assert(status_driver==INVALID_DRIVER);
@@ -43,7 +45,7 @@ shaked\n\
    // printf("poi=%d\n",poi);
 
 //    TeamStatus team_status=TEAM_STATUS_OK;
-Driver d1=DriverCreate(&status_driver,"avi",1323);
+    Driver d1=DriverCreate(&status_driver,"avi",1323);
     Driver d2=DriverCreate(&status_driver,"or",23);
     Team t1=TeamCreate(&status_team,"chevrolet");
     TeamAddDriver(t1, d1);

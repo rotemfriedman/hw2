@@ -251,10 +251,10 @@ Driver SeasonGetDriverByPosition(Season season, int position, SeasonStatus* stat
     Driver *new_array_drivers;
     new_array_drivers=SeasonGetDriversStandings(season);
     if( position <=0 || position > size_array) {    //the position is not legal
-        *status = INVALID_POSITION;
+        *status = BAD_SEASON_INFO;
         return NULL;
     }else{
-        *status = SEASON_OK;
+       * status = SEASON_OK;
         return new_array_drivers[position-1];
 
     }
